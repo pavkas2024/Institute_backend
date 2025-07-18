@@ -14,6 +14,11 @@ import { InstitutsModule } from './instituts/instituts.module';
 import { IntprojectsModule } from './intprojects/intprojects.module';
 import { JournalsModule } from './journals/journals.module';
 import { NatprojectsModule } from './natprojects/natprojects.module';
+import { NewsModule } from './news/news.module';
+import { ProcurementModule } from './procurements/procurements.module';
+import { PublicationsModule } from './publications/publications.module';
+import { SeminarsModule } from './seminars/seminars.module';
+import { StaffsModule } from './staffs/staffs.module';
 
 
 @Module({
@@ -33,7 +38,12 @@ import { NatprojectsModule } from './natprojects/natprojects.module';
     InstitutsModule,
     IntprojectsModule,
     JournalsModule,
-    NatprojectsModule, 
+    NatprojectsModule,
+    NewsModule,
+    ProcurementModule,
+    PublicationsModule,
+    SeminarsModule,
+    StaffsModule, 
   ],
   controllers: [AppController],
   providers: [AppService],
