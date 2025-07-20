@@ -15,21 +15,21 @@ export class CollaborationsService {
         @InjectModel(Collaboration.name)
         private collaborationsModel: Model<Collaboration>,
     ) {}
-    
+ ////////////////////////////////////////   
     async getAll(): Promise<Collaboration[]> {
         const collaborations = await this.collaborationsModel.find();
     
         return collaborations;
     }
     
-    
+ ////////////////////////////////////////   
     async create(collaboration: CreateCollaborationDto): Promise<Collaboration> {
         const res = await this.collaborationsModel.create(collaboration);
     
         return res;
     }
     
-    
+  ////////////////////////////////////////  
     async getById(id: string): Promise<Collaboration> {
         const isValidId = mongoose.isValidObjectId(id);
     
@@ -46,7 +46,7 @@ export class CollaborationsService {
         return collaboration;
       }
     
-    
+  ////////////////////////////////////////  
     async updateById(id: string, collaboration: Partial<UpdateCollaborationDto>): Promise<Collaboration> {
         const isValidId = mongoose.isValidObjectId(id);
     
@@ -66,7 +66,7 @@ export class CollaborationsService {
         return updated;
     }
     
-    
+  ////////////////////////////////////////  
     async deleteById(id: string): Promise<Collaboration> {
         const isValidId = mongoose.isValidObjectId(id);
     
@@ -82,7 +82,7 @@ export class CollaborationsService {
 
         return deleted;
     }
-    
+ ////////////////////////////////////////   
     async deletePublicationsById(id: string) {
         const isValidId = mongoose.isValidObjectId(id);
     
@@ -103,7 +103,7 @@ export class CollaborationsService {
         return updated;
     }
     
-    
+ ////////////////////////////////////////   
     extractFilenameFromUrl(url: string): string {
         if (!url) {
             return '';
