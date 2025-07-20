@@ -80,6 +80,8 @@ export class CollaborationsController {
         if (typeof body.publications === 'string') {
             body.publications = JSON.parse(body.publications);
         }
+
+        console.log(body.translates);
         
         let photoUrl: string | undefined;
 
