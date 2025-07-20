@@ -69,6 +69,10 @@ export class CollaborationsController {
         photo?: Express.Multer.File,
     ): Promise<Collaboration> {
 
+        console.log('📥 POST /collaborations called');
+    console.log('👉 Raw body:', body);
+    console.log('📷 Photo file:', photo);
+
         if (typeof body.translates === 'string') {
             body.translates = JSON.parse(body.translates);
         }
