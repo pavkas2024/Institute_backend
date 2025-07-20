@@ -2,45 +2,37 @@ import {
     IsNotEmpty,
     IsOptional,
     IsString,
-    ValidateNested, 
-} from 'class-validator';
+    IsObject,
+    IsArray,
+    ValidateIf,
+  } from 'class-validator';
 
-import { Type } from 'class-transformer';
 
-class TranslationDto {
-    @IsNotEmpty()
-    @IsString()
-    description: string;
-  
-    @IsNotEmpty()
-    @IsString()
-    org: string;
-}
-
-class TranslatesDto {
-    @ValidateNested()
-    @Type(() => TranslationDto)
-    uk: TranslationDto;
-
-    @ValidateNested()
-    @Type(() => TranslationDto)
-    en: TranslationDto;
-}
-export class CreateCollaborationDto {
+  export class CreateCollaborationDto {
     @IsOptional()
     @IsString()
     readonly photo?: string;
-
-    @ValidateNested()
-    @Type(() => TranslatesDto)
-    readonly translates: TranslatesDto;
-
+  
+    @IsNotEmpty()
+    @IsObject()
+    readonly translates: {
+      uk: {
+        description: string;
+        org: string;
+      };
+      en: {
+        description: string;
+        org: string;
+      };
+    };
+  
     @IsOptional()
     @IsString()
     readonly link?: string;
-
+  
     @IsOptional()
-    readonly publications: string[];
-
-}
+    @IsArray()
+    @IsString({ each: true })
+    readonly publications?: string[];
+  }
   
