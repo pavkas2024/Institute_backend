@@ -39,7 +39,7 @@ export class StaffsController {
 
     /////////////////////////////////////////////////////    
     @Get()
-    async getAllCollaborations(): Promise<Staff[]> {
+    async getAllStaffs(): Promise<Staff[]> {
 
     return this.staffsService.getAll();
     }
@@ -54,7 +54,7 @@ export class StaffsController {
     })
     @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request' })
     @UseInterceptors(FileInterceptor('photo'))
-    async createCollaboration(
+    async createStaff(
     @Body()
     body: any, 
     @UploadedFile(
@@ -162,7 +162,7 @@ export class StaffsController {
 /////////////////////////
     @Delete(':id')
     @ApiOperation({ summary: 'Delete staff by Id (only for Admin)' })
-    @ApiParam({ name: 'id', required: true, description: 'Staffs Id' })
+    @ApiParam({ name: 'id', required: true, description: 'Staff Id' })
     @ApiResponse({
     status: HttpStatus.OK,
     description: 'Success',
