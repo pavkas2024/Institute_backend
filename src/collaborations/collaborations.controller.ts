@@ -92,7 +92,7 @@ export class CollaborationsController {
         
         return this.collaborationsService.create(data);
     }
-
+////////////////////////////////
     @Get(':id')
     async getCollaboration(
         @Param('id')
@@ -100,7 +100,7 @@ export class CollaborationsController {
     ): Promise<Collaboration> {
         return this.collaborationsService.getById(id);
     }
-    
+ ///////////////////////////////////////   
     @Patch(':id')
     @UseInterceptors(FileInterceptor('photo'))
     async updateCollaboration(
@@ -159,7 +159,7 @@ export class CollaborationsController {
         
         return this.collaborationsService.updateById(id, data);
     }
-    
+ //////////////////////////////////////   
     @Delete(':id')
     @ApiOperation({ summary: 'Delete collaboration by Id (only for Admin)' })
     @ApiParam({ name: 'id', required: true, description: 'Collaborations Id' })
@@ -182,7 +182,7 @@ export class CollaborationsController {
     
         return this.collaborationsService.deleteById(id);
     }
-    
+ ///////////////////////////////////   
     @Delete('photo/:id')
     @ApiOperation({ summary: 'Delete photo from collaboration by Id (only for Admin)' })
     @ApiParam({ name: 'id', required: true, description: 'Collaboration Id' })
