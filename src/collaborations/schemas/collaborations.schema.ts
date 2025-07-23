@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Collaboration extends Document {
-  @Prop({ required: false })  // необов’язкове поле
+  @Prop({ required: false, default: ''  })  // необов’язкове поле
   photo?: string;
 
   @Prop({
@@ -30,7 +30,7 @@ export class Collaboration extends Document {
     };
   };
 
-  @Prop({ required: false })  // необов’язкове поле
+  @Prop({ required: false, default: ''  })  // необов’язкове поле
   link?: string;
 
   @Prop([String])

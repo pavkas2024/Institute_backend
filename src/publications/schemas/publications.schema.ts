@@ -3,16 +3,16 @@ import { Document } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Publication extends Document {
-  @Prop({ required: false })
+  @Prop({ required: false, default: ''  })
   photo?: string;
 
-  @Prop({ required: false })
+  @Prop({ required: false, default: ''  })
   doi?: string;
 
   @Prop({ required: true })
   year: string;
 
-  @Prop({ required: false })
+  @Prop({ required: false, default: ''  })
   issn?: string;
 
   @Prop({
@@ -20,9 +20,9 @@ export class Publication extends Document {
       uk: {
         title: { type: String, required: true },
         authors: { type: String, required: true },
-        journal: { type: String, required: false },
-        publisher: { type: String, required: false },
-        city: { type: String, required: false },
+        journal: { type: String, required: false, default: ''  },
+        publisher: { type: String, required: false, default: ''  },
+        city: { type: String, required: false, default: ''  },
         pages: { type: String, required: true },
         description: { type: String, required: true },
         other: { type: String, required: true },
@@ -30,9 +30,9 @@ export class Publication extends Document {
       en: {
         title: { type: String, required: true },
         authors: { type: String, required: true },
-        journal: { type: String, required: false },
-        publisher: { type: String, required: false },
-        city: { type: String, required: false },
+        journal: { type: String, required: false, default: ''  },
+        publisher: { type: String, required: false, default: ''  },
+        city: { type: String, required: false, default: ''  },
         pages: { type: String, required: true },
         description: { type: String, required: true },
         other: { type: String, required: true },

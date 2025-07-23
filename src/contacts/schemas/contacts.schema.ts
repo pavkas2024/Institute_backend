@@ -6,16 +6,16 @@ export class Contact extends Document {
   @Prop({ required: true })
   build: string;
 
-  @Prop({ required: false})
+  @Prop({ required: false, default: '' })
   corp?: string;
 
   @Prop({ required: true })
   indexPost: string;
 
-  @Prop({ required: false})
+  @Prop({ required: false, default: '' })
   linkFacebook?: string;
 
-  @Prop({ required: false})
+  @Prop({ required: false, default: '' })
   linkAcademy?: string;
 
   @Prop({ required: true })

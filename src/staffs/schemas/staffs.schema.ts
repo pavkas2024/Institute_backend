@@ -3,27 +3,26 @@ import { Document } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Staff extends Document {
-  @Prop({ required: false })
+  @Prop({ required: false, default: ''  })
   photo?: string;
 
-  @Prop({ required: false })
+  @Prop({ required: false, default: ''  })
   link?: string;
 
   @Prop({
-    type: [
-      {
-        orcid: { type: String },
-        linkedIn: { type: String },
-        googleScholar: { type: String },
-        scopus: { type: String },
-        wos: { type: String },
-        academy: { type: String },
-        facebook: { type: String },
-      },
-    ],
+    type: {
+      orcid: { type: String },
+      linkedIn: { type: String },
+      googleScholar: { type: String },
+      scopus: { type: String },
+      wos: { type: String },
+      academy: { type: String },
+      facebook: { type: String },
+    },
     required: false,
+    default: '' 
   })
-  profiles: Array<{
+  profiles?: {
     orcid?: string;
     linkedIn?: string;
     googleScholar?: string;
@@ -31,7 +30,7 @@ export class Staff extends Document {
     wos?: string;
     academy?: string;
     facebook?: string;
-  }>;
+  };
 
   @Prop({
     type: {
@@ -39,21 +38,17 @@ export class Staff extends Document {
         name: { type: String, required: true },
         surname: { type: String, required: true },
         patronymic: { type: String, required: true },
-        degree: { type: String, required: false },
-        acadTitle: { type: String, required: false },
-        acadTitle2: { type: String, required: false },
-        info: { type: String, required: false },
+        degree: { type: String, required: false, default: ''  },
+        acadTitle: { type: String, required: false, default: ''  },
         position: { type: String, required: true },
         department: { type: String, required: true },
       },
       en: {
         name: { type: String, required: true },
         surname: { type: String, required: true },
-        patronymic: { type: String, required: false },
-        degree: { type: String, required: false },
-        acadTitle: { type: String, required: false },
-        acadTitle2: { type: String, required: false },
-        info: { type: String, required: false },
+        patronymic: { type: String, required: false, default: ''  },
+        degree: { type: String, required: false, default: ''  },
+        acadTitle: { type: String, required: false, default: ''  },
         position: { type: String, required: true },
         department: { type: String, required: true },
       },
@@ -65,21 +60,17 @@ export class Staff extends Document {
       name: string;
       surname: string;
       patronymic: string;
-      degree: string;
-      acadTitle: string;
-      acadTitle2: string;
-      info: string;
+      degree?: string;
+      acadTitle?: string;
       position: string;
       department: string;
     };
     en: {
       name: string;
       surname: string;
-      patronymic: string;
-      degree: string;
-      acadTitle: string;
-      acadTitle2: string;
-      info: string;
+      patronymic?: string;
+      degree?: string;
+      acadTitle?: string;
       position: string;
       department: string;
     };
