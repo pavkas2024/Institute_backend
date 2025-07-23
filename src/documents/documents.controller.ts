@@ -54,7 +54,7 @@ export class DocumentsController {
     type: 'Document',
     })
     @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request' })
-    @UseInterceptors(FileInterceptor('file'))
+    @UseInterceptors(FileInterceptor('link'))
     async createDocument(
         @Body()
         body: any, 
@@ -62,7 +62,7 @@ export class DocumentsController {
             new ParseFilePipe({
                 validators: [
                     new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-                    new FileTypeValidator({ fileType: /\.(png|jpeg|jpg|webp|pdf)$/  }),
+                    new FileTypeValidator({ fileType: 'application/pdf' }),
                 ],
                 fileIsRequired: true,
             }),
@@ -100,7 +100,7 @@ export class DocumentsController {
 
     ///////////////////////////////////////////////
     @Patch(':id')
-    @UseInterceptors(FileInterceptor('file'))
+    @UseInterceptors(FileInterceptor('link'))
     async updateDocument(
     @Param('id')
     id: string,
@@ -110,7 +110,7 @@ export class DocumentsController {
         new ParseFilePipe({
             validators: [
                 new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-                new FileTypeValidator({ fileType: /\.(png|jpeg|jpg|webp|pdf)$/   }),
+                new FileTypeValidator({ fileType: 'application/pdf' }),
             ],
             fileIsRequired: false,
         }),
