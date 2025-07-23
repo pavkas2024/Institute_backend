@@ -9,8 +9,29 @@ export class Staff extends Document {
   @Prop({ required: false })
   link?: string;
 
-  @Prop({ type: [String], required: true })
-  profiles: string[];
+  @Prop({
+    type: [
+      {
+        orcid: { type: String },
+        linkedIn: { type: String },
+        googleScholar: { type: String },
+        scopus: { type: String },
+        wos: { type: String },
+        academy: { type: String },
+        facebook: { type: String },
+      },
+    ],
+    required: false,
+  })
+  profiles: Array<{
+    orcid?: string;
+    linkedIn?: string;
+    googleScholar?: string;
+    scopus?: string;
+    wos?: string;
+    academy?: string;
+    facebook?: string;
+  }>;
 
   @Prop({
     type: {
@@ -20,6 +41,8 @@ export class Staff extends Document {
         patronymic: { type: String, required: true },
         degree: { type: String, required: false },
         acadTitle: { type: String, required: false },
+        acadTitle2: { type: String, required: false },
+        info: { type: String, required: false },
         position: { type: String, required: true },
         department: { type: String, required: true },
       },
@@ -29,6 +52,8 @@ export class Staff extends Document {
         patronymic: { type: String, required: false },
         degree: { type: String, required: false },
         acadTitle: { type: String, required: false },
+        acadTitle2: { type: String, required: false },
+        info: { type: String, required: false },
         position: { type: String, required: true },
         department: { type: String, required: true },
       },
@@ -42,6 +67,8 @@ export class Staff extends Document {
       patronymic: string;
       degree: string;
       acadTitle: string;
+      acadTitle2: string;
+      info: string;
       position: string;
       department: string;
     };
@@ -51,6 +78,8 @@ export class Staff extends Document {
       patronymic: string;
       degree: string;
       acadTitle: string;
+      acadTitle2: string;
+      info: string;
       position: string;
       department: string;
     };
