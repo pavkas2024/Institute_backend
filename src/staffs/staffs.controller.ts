@@ -41,7 +41,7 @@ export class StaffsController {
     @Get()
     async getAllStaffs(): Promise<Staff[]> {
 
-    return this.staffsService.getAll();
+        return this.staffsService.getAll();
     }
     /////////////////////////////////////////////////////    
     @Post()

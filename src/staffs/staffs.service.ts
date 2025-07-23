@@ -85,26 +85,7 @@ async deleteById(id: string): Promise<Staff> {
     return deleted;
 }
 
- ////////////////////////////////////////   
- async deleteProfilesById(id: string) {
-    const isValidId = mongoose.isValidObjectId(id);
-
-    if (!isValidId) {
-        throw new BadRequestException('Invalid staff ID');
-    }
-
-    const updated = await this.staffsModel.findByIdAndUpdate(
-        id,
-        { profiles: [] },
-        { new: true },
-    );
-
-    if (!updated) {
-        throw new NotFoundException('Staff not found.');
-    }
-
-    return updated;
-}
+ 
 
 ////////////////////////////////////////   
 extractFilenameFromUrl(url: string): string {
