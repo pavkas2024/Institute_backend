@@ -5,8 +5,10 @@ import {
     IsObject,
   } from 'class-validator';
 
+  import { ApiProperty } from '@nestjs/swagger';
 
-  export class CreateSeminarDto {
+
+  export class ResponseSeminarDto {
 
     @IsOptional()
     @IsString()
@@ -15,6 +17,13 @@ import {
     @IsNotEmpty()
     @IsString()
     readonly date: string;
+
+    @ApiProperty({
+        description: 'Array of photos',
+        nullable: true,
+      })
+      @IsOptional()
+      readonly photos?: string[];
 
   
     @IsNotEmpty()
@@ -33,4 +42,3 @@ import {
     };
 
   }
-  

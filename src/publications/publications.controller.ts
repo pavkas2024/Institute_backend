@@ -71,6 +71,7 @@ export class PublicationsController {
     photo?: Express.Multer.File,
     ): Promise<Publication> {
 
+   
     if (typeof body.translates === 'string') {
         body.translates = JSON.parse(body.translates);
     }
@@ -88,6 +89,7 @@ export class PublicationsController {
     };
 
     return this.publicationsService.create(data);
+
     }
 ///////////////////////////////////////
     @Get(':id')

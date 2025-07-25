@@ -3,7 +3,6 @@ import {
     IsOptional,
     IsString,
     IsObject,
-    IsArray,
   } from 'class-validator';
 
 
@@ -22,7 +21,7 @@ import {
 
     @IsOptional()
     @IsString()
-    readonly issn: string;
+    readonly issn?: string;
 
   
     @IsNotEmpty()
@@ -34,9 +33,9 @@ import {
         journal?: string;
         publisher?: string;
         city?: string,
-        pages: string,
+        pages?: string,
         description: string;
-        other: string;
+        other?: string;
       };
       en: {
         title: string;
@@ -44,9 +43,9 @@ import {
         journal?: string;
         publisher?: string;
         city?: string,
-        pages: string,
+        pages?: string,
         description: string;
-        other: string;
+        other?: string;
       };
     };
 

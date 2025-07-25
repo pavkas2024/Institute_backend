@@ -23,9 +23,9 @@ export class Publication extends Document {
         journal: { type: String, required: false, default: ''  },
         publisher: { type: String, required: false, default: ''  },
         city: { type: String, required: false, default: ''  },
-        pages: { type: String, required: true },
+        pages: { type: String, required: false, default: '' },
         description: { type: String, required: true },
-        other: { type: String, required: true },
+        other: { type: String, required: false, default: '' },
       },
       en: {
         title: { type: String, required: true },
@@ -33,9 +33,9 @@ export class Publication extends Document {
         journal: { type: String, required: false, default: ''  },
         publisher: { type: String, required: false, default: ''  },
         city: { type: String, required: false, default: ''  },
-        pages: { type: String, required: true },
+        pages: { type: String, required: false, default: '' },
         description: { type: String, required: true },
-        other: { type: String, required: true },
+        other: { type: String, required: false, default: '' },
       },
     },
     required: true,
@@ -47,9 +47,9 @@ export class Publication extends Document {
       journal?: string;
       publisher?: string;
       city?: string;
-      pages: string;
+      pages?: string;
       description: string;
-      other: string;
+      other?: string;
     };
     en: {
       title: string;
@@ -57,9 +57,9 @@ export class Publication extends Document {
       journal?: string;
       publisher?: string;
       city?: string;
-      pages: string;
+      pages?: string;
       description: string;
-      other: string;
+      other?: string;
     };
   };
 }
