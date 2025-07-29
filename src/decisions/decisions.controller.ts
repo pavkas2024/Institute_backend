@@ -13,6 +13,7 @@ import {
     FileTypeValidator,
     HttpStatus,
     ValidationPipe,
+    BadRequestException, 
   } from '@nestjs/common';
   import {
     ApiTags,
@@ -74,7 +75,11 @@ export class DecisionsController {
         ): Promise<Decision> {
 
             if (typeof body.translates === 'string') {
-                body.translates = JSON.parse(body.translates);
+                try {
+                    body.translates = JSON.parse(body.translates);
+                } catch {
+                    throw new BadRequestException('Invalid JSON in translates');
+                }
             }
 
             let fileUrl: string | undefined;
@@ -134,7 +139,11 @@ export class DecisionsController {
      ): Promise<Decision> {
 
         if (typeof body.translates === 'string') {
-            body.translates = JSON.parse(body.translates);
+            try {
+                body.translates = JSON.parse(body.translates);
+            } catch {
+                throw new BadRequestException('Invalid JSON in translates');
+            }
         }
 
  
