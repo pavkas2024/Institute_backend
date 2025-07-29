@@ -3,14 +3,35 @@ import { Document } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class New   extends Document{
-  @Prop({ required: true })
-  title: string;
+ 
+  @Prop({
+    type: {
+      uk: {
+        title: { type: String, required: true },
+        description: { type: String, required: true },
+      },
+      en: {
+        title: { type: String, required: true },
+        description: { type: String, required: true },
+      },
+    },
+    required: true,
+  })
+  translates: {
+    uk: {
+      title: string;
+      description: string;
+    };
+    en: {
+      title: string;
+      description: string;
+    };
+  };
+
+
 
   @Prop({ required: false, default: '' })
   photo?: string;
-
-  @Prop({ required: true })
-  description: string;
 
   @Prop({ required: false, default: '' })
   date?: string;
