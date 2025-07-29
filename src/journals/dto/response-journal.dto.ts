@@ -5,7 +5,7 @@ import {
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
   
-  export class CreateJournalDto {
+  export class ResponseJournalDto {
     @IsNotEmpty()
   @IsObject()
   @ApiProperty({
@@ -53,4 +53,10 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
     @IsString()
     @ApiPropertyOptional({ example: 'http://.....' })
     readonly link: string;
+
+
+    @IsNotEmpty()
+    @IsString()
+    @ApiPropertyOptional({ example: 'https://res.cloudinary.com/.../image.jpg' })
+    readonly photo: string; // буде посилання на файл у Cloudinary
   }
