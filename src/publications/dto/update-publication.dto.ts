@@ -35,7 +35,7 @@ import {
         publisher?: string;
         city?: string,
         pages?: string,
-        description: string;
+        description?: string;
         other?: string;
       };
       en: {
@@ -45,7 +45,7 @@ import {
         publisher?: string;
         city?: string,
         pages?: string,
-        description: string;
+        description?: string;
         other?: string;
       };
     };
