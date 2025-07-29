@@ -8,10 +8,6 @@ import {
     Post,
     UseGuards,
     UseInterceptors,
-    UploadedFile,
-    ParseFilePipe,
-    MaxFileSizeValidator,
-    FileTypeValidator,
     HttpStatus,
     BadRequestException, 
 } from '@nestjs/common';
