@@ -6,7 +6,7 @@ import {
 } from 'class-validator';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
   
-  export class UpdateInstitutDto {
+  export class ResponseInstitutDto {
     @IsNotEmpty()
   @IsObject()
   @ApiProperty({

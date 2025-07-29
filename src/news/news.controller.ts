@@ -41,7 +41,7 @@ export class NewsController {
 
       /////////////////////////////////////////////////////    
       @Get()
-      async getAllPublications(): Promise<New[]> {
+      async getAllNews(): Promise<New[]> {
   
       return this.newsService.getAll();
       }
