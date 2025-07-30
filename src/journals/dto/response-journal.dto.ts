@@ -51,7 +51,7 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
   
     @IsNotEmpty()
     @IsString()
-    @ApiPropertyOptional({ example: 'http://.....' })
+    @ApiProperty({ example: 'http://.....' })
     readonly link: string;
 
 

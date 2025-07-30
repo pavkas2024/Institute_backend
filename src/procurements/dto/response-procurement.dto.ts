@@ -1,16 +1,8 @@
 import { IsNotEmpty, IsString, IsUrl, IsObject } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateDecisionDto {
+export class ResponseProcurementDto {
 
-
-  @ApiProperty({
-    description: 'Посилання на PDF файл у Cloudinary',
-    example: 'https://res.cloudinary.com/demo/raw/upload/v1234567890/sample.pdf',
-  })
-  @IsNotEmpty()
-  @IsUrl()
-  link: string;
 
   @ApiProperty({
     description: 'Переклади назв документа',
@@ -18,6 +10,7 @@ export class UpdateDecisionDto {
       uk: { title: 'Протокол' },
       en: { title: 'Protokol' },
     },
+    type: Object,
   })
   @IsNotEmpty()
   @IsObject()
@@ -29,4 +22,17 @@ export class UpdateDecisionDto {
       title: string;
     };
   };
+
+  @ApiProperty({
+    description: 'Посилання на PDF файл у Cloudinary',
+    example: 'https://res.cloudinary.com/demo/raw/upload/v1234567890/sample.pdf',
+  })
+  @IsNotEmpty()
+  @IsUrl()
+  file: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({ example: '2025' })
+  readonly year: string;
 }

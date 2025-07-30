@@ -3,7 +3,7 @@ import {
     IsString,
     IsObject,
 } from 'class-validator';
-import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { ApiProperty } from '@nestjs/swagger';
   
   export class CreateJournalDto {
     @IsNotEmpty()
@@ -51,6 +51,6 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
   
     @IsNotEmpty()
     @IsString()
-    @ApiPropertyOptional({ example: 'http://.....' })
+    @ApiProperty({ example: 'http://.....' })
     readonly link: string;
   }
