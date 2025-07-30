@@ -40,7 +40,7 @@ class TranslationSubDto {
   partners: PartnerDto[];
 }
 
-export class CreateIntprojectDto {
+export class ResponseIntprojectDto {
   @IsNotEmpty()
   @IsString()
   @ApiProperty({ example: '2023' })
@@ -91,4 +91,9 @@ export class CreateIntprojectDto {
   @IsString()
   @ApiPropertyOptional({ example: 'Національний фонд досліджень України, загальна сума' })
   funding?: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiPropertyOptional({ example: 'http://cloudinary.....' })
+  photo?: string;
 }
