@@ -90,7 +90,7 @@ export class ProcurementsController {
 
         const data = {
             ...body,
-            link: fileUrl,
+            file: fileUrl,
         };
 
         return this.procurementsService.create(data);
@@ -161,7 +161,7 @@ export class ProcurementsController {
     
         const data = {
             ...body,
-            link: updatedFileUrl,
+            file: updatedFileUrl,
         };
  
      return this.procurementsService.updateById(id, data);
