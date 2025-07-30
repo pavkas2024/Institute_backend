@@ -70,9 +70,13 @@ export class DocumentsController {
         file?: Express.Multer.File,
         ): Promise<Institutedocument> {
 
-        if (typeof body.translates === 'string') {
-            body.translates = JSON.parse(body.translates);
-        }
+            if (typeof body.translates === 'string') {
+                try {
+                    body.translates = JSON.parse(body.translates);
+                } catch {
+                    throw new BadRequestException('Invalid JSON in translates');
+                }
+            }
 
         let fileUrl: string | undefined;
 

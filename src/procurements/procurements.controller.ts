@@ -70,7 +70,7 @@ export class ProcurementsController {
                 fileIsRequired: true,
             }),
         )
-        file: Express.Multer.File,
+        file?: Express.Multer.File,
         ): Promise<Procurement> {
 
             if (typeof body.translates === 'string') {

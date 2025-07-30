@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsUrl, IsObject } from 'class-validator';
+import { IsNotEmpty, IsString,  IsObject } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateProcurementDto {
