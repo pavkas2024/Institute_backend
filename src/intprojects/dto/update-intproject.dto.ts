@@ -58,7 +58,7 @@ export class UpdateIntprojectDto {
   @ApiProperty({
     description: 'Translated fields in UA and EN',
     example: {
-      ua: {
+      uk: {
         context: 'Назва конкурсу',
         head: 'Керівник',
         results: 'Нові результати',
@@ -73,7 +73,7 @@ export class UpdateIntprojectDto {
     },
   })
   translates: {
-    ua: TranslationSubDto;
+    uk: TranslationSubDto;
     en: TranslationSubDto;
   };
 

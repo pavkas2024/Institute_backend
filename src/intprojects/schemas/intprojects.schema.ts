@@ -11,7 +11,7 @@ export class Intproject extends Document {
 
   @Prop({
     type: {
-      ua: {
+      uk: {
         context: { type: String, required: false, default: '' },
         head: { type: String, required: true },
         results: { type: String, required: false, default: '' },
@@ -45,7 +45,7 @@ export class Intproject extends Document {
     required: true,
   })
   translates: {
-    ua: {
+    uk: {
       context?: string;
       head: string;
       results?: string;
