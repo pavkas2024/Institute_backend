@@ -14,6 +14,7 @@ export class Intproject extends Document {
       uk: {
         context: { type: String, required: false, default: '' },
         head: { type: String, required: true },
+        title: { type: String, required: true },
         results: { type: String, required: false, default: '' },
         partners: {
           type: [
@@ -29,6 +30,7 @@ export class Intproject extends Document {
       en: {
         context: { type: String, required: false, default: '' },
         head: { type: String, required: true },
+        title: { type: String, required: true },
         results: { type: String, required: false, default: '' },
         partners: {
           type: [
@@ -48,12 +50,14 @@ export class Intproject extends Document {
     uk: {
       context?: string;
       head: string;
+      title: string;
       results?: string;
       partners: { title: string; link?: string }[];
     };
     en: {
       context?: string;
       head: string;
+      title: string;
       results?: string;
       partners: { title: string; link?: string }[];
     };

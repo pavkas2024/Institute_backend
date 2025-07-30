@@ -25,6 +25,12 @@ class TranslationSubDto {
   @ApiProperty({ example: 'Керівник проєкту' })
   head: string;
 
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({ example: 'Назва проєкту' })
+  title: string;
+
   @IsOptional()
   @IsString()
   @ApiPropertyOptional({ example: 'Результати дослідження' })
@@ -61,12 +67,14 @@ export class ResponseIntprojectDto {
       uk: {
         context: 'Назва конкурсу',
         head: 'Керівник',
+        title: 'Назва',
         results: 'Нові результати',
         partners: [{ title: 'Проєкт', link: 'https://univ.kiev.ua' }],
       },
       en: {
         context: 'Context Title',
         head: 'PI',
+        title: 'Title',
         results: 'New insights',
         partners: [{ title: 'Project', link: 'https://ox.ac.uk' }],
       },

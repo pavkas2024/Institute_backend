@@ -27,7 +27,7 @@ class TranslationSubDto {
 
 }
 
-export class UpdateNatprojectDto {
+export class ResponseNatprojectDto {
   @IsNotEmpty()
   @IsString()
   @ApiProperty({ example: '2023' })
