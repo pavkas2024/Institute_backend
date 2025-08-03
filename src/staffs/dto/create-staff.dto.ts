@@ -3,6 +3,7 @@ import {
   IsOptional,
   IsString,
   IsObject,
+  IsIn,
 } from 'class-validator';
 import { ApiPropertyOptional, ApiProperty } from '@nestjs/swagger';
 
@@ -11,6 +12,11 @@ export class CreateStaffDto {
   @IsString()
   @ApiPropertyOptional({ example: 'https://someurl.com/photo.jpg' })
   readonly photo?: string;
+
+  @IsNotEmpty()
+  @IsIn(['так', 'ні'])
+  @ApiPropertyOptional({ example: 'так', enum: ['так', 'ні'] })
+  readonly council: 'так' | 'ні';
 
   @IsOptional()
   @IsString()

@@ -2,6 +2,8 @@ import {
   IsOptional,
   IsString,
   IsObject,
+  IsNotEmpty,
+  IsIn,
 } from 'class-validator';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 
@@ -15,6 +17,11 @@ export class UpdateStaffDto {
   @IsString()
   @ApiPropertyOptional({ example: 'https://personal.link' })
   readonly link?: string;
+
+  @IsNotEmpty()
+  @IsIn(['так', 'ні'])
+  @ApiPropertyOptional({ example: 'так', enum: ['так', 'ні'] })
+  readonly council: 'так' | 'ні';
 
   @IsOptional()
   @IsObject()
