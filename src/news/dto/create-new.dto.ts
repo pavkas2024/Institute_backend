@@ -54,4 +54,9 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
     @IsString()
     @ApiPropertyOptional({ example: '2025-07-29' })
     readonly date?: string;
+
+    @IsOptional()
+    @IsString()
+    @ApiPropertyOptional({ example: 'http://' })
+    readonly link?: string;
   }

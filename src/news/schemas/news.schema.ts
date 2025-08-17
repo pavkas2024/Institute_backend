@@ -35,6 +35,9 @@ export class New extends Document{
 
   @Prop({ required: false, default: '' })
   date?: string;
+
+  @Prop({ required: false, default: '' })
+  link?: string;
 }
 
 export const NewsSchema = SchemaFactory.createForClass(New);
