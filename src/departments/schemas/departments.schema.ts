@@ -38,6 +38,9 @@ export class Department extends Document {
       projects?: string[];
     };
   };
+
+  @Prop({ required: true })
+  order: string;
 }
 
 export const DepartmentsSchema = SchemaFactory.createForClass(Department);

@@ -1,5 +1,6 @@
 import {
     IsNotEmpty,
+    IsString,
     IsObject,
   } from 'class-validator';
 
@@ -25,6 +26,9 @@ import {
         projects?: string[];
       };
     };
-  
+
+    @IsNotEmpty()
+    @IsString()
+    readonly order: string;
   }
   

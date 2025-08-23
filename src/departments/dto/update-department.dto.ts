@@ -1,13 +1,14 @@
 import {
-    IsNotEmpty,
+    IsOptional,
     IsObject,
+    IsString,
   } from 'class-validator';
 
 
   export class UpdateDepartmentDto {
   
   
-    @IsNotEmpty()
+    @IsOptional()
     @IsObject()
     readonly translates: {
       uk: {
@@ -25,5 +26,9 @@ import {
         projects?: string[];
       };
     };
+
+    @IsOptional()
+    @IsString()
+    readonly order: string;
   
   }
