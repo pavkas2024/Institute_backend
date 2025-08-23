@@ -1,12 +1,14 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
+export type StaffDocument = Staff & Document;
+
 @Schema({ timestamps: true })
 export class Staff extends Document {
-  @Prop({ required: false, default: ''  })
+  @Prop({ required: false, default: '' })
   photo?: string;
 
-  @Prop({ required: false, default: ''  })
+  @Prop({ required: false, default: '' })
   link?: string;
 
   @Prop({ 
@@ -27,7 +29,7 @@ export class Staff extends Document {
       facebook: { type: String },
     },
     required: false,
-    default: '' 
+    default: {} 
   })
   profiles?: {
     orcid?: string;
@@ -44,22 +46,22 @@ export class Staff extends Document {
       uk: {
         name: { type: String, required: true },
         surname: { type: String, required: true },
-        patronymic: { type: String, required: true },
-        degree: { type: String, required: false, default: ''  },
-        acadTitle: { type: String, required: false, default: ''  },
-        acadTitle2: { type: String, required: false, default: ''  },
-        info: { type: String, required: false, default: ''  },
+        patronymic: { type: String, required: false, default: '' },
+        degree: { type: String, required: false, default: '' },
+        acadTitle: { type: String, required: false, default: '' },
+        acadTitle2: { type: String, required: false, default: '' },
+        info: { type: String, required: false, default: '' },
         position: { type: String, required: true },
         department: { type: String, required: true },
       },
       en: {
         name: { type: String, required: true },
         surname: { type: String, required: true },
-        patronymic: { type: String, required: false, default: ''  },
-        degree: { type: String, required: false, default: ''  },
-        acadTitle: { type: String, required: false, default: ''  },
-        acadTitle2: { type: String, required: false, default: ''  },
-        info: { type: String, required: false, default: ''  },
+        patronymic: { type: String, required: false, default: '' },
+        degree: { type: String, required: false, default: '' },
+        acadTitle: { type: String, required: false, default: '' },
+        acadTitle2: { type: String, required: false, default: '' },
+        info: { type: String, required: false, default: '' },
         position: { type: String, required: true },
         department: { type: String, required: true },
       },
@@ -70,9 +72,11 @@ export class Staff extends Document {
     uk: {
       name: string;
       surname: string;
-      patronymic: string;
+      patronymic?: string;
       degree?: string;
       acadTitle?: string;
+      acadTitle2?: string;
+      info?: string;
       position: string;
       department: string;
     };
@@ -82,10 +86,20 @@ export class Staff extends Document {
       patronymic?: string;
       degree?: string;
       acadTitle?: string;
+      acadTitle2?: string;
+      info?: string;
       position: string;
       department: string;
     };
   };
+
+  // ---- Додано поле role для категорії співробітника ----
+  @Prop({
+    required: true,
+    enum: ['advisor', 'director', 'dep', 'secr', 'scientific', 'fin'],
+    type: String,
+  })
+  role: 'advisor' | 'director' | 'dep' | 'secr' | 'scientific' | 'fin';
 }
 
 export const StaffsSchema = SchemaFactory.createForClass(Staff);

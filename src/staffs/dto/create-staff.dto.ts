@@ -1,5 +1,6 @@
 import {
   IsNotEmpty,
+  IsEnum,
   IsOptional,
   IsString,
   IsObject,
@@ -100,4 +101,8 @@ export class CreateStaffDto {
       department: string;
     };
   };
+
+
+  @IsEnum(['advisor', 'director', 'dep', 'secr', 'scientific', 'fin'])
+  role: 'advisor' | 'director' | 'dep' | 'secr' | 'scientific' | 'fin';
 }

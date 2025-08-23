@@ -3,6 +3,7 @@ import {
     IsString,
     IsObject,
     IsNotEmpty,
+    IsEnum,
     IsIn,
   } from 'class-validator';
   import { ApiPropertyOptional } from '@nestjs/swagger';
@@ -100,4 +101,7 @@ import {
         department?: string;
       };
     };
+
+    @IsEnum(['advisor', 'director', 'dep', 'secr', 'scientific', 'fin'])
+    role: 'advisor' | 'director' | 'dep' | 'secr' | 'scientific' | 'fin';
   }
