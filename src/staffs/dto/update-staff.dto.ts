@@ -19,10 +19,15 @@ export class UpdateStaffDto {
   @ApiPropertyOptional({ example: 'https://personal.link' })
   readonly link?: string;
 
-  @IsNotEmpty()
+  @IsOptional()
   @IsIn(['так', 'ні'])
   @ApiPropertyOptional({ example: 'так', enum: ['так', 'ні'] })
   readonly council: 'так' | 'ні';
+
+  @IsOptional()
+  @IsString()
+  @ApiPropertyOptional({ example: '1100' })
+  readonly order: string;
 
   @IsOptional()
   @IsObject()
@@ -102,6 +107,7 @@ export class UpdateStaffDto {
     };
   };
 
+  @IsOptional()
   @IsEnum(['advisor', 'director', 'dep', 'secr', 'scientific', 'fin'])
   role: 'advisor' | 'director' | 'dep' | 'secr' | 'scientific' | 'fin';
 }

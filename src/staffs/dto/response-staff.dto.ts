@@ -18,6 +18,11 @@ import {
     @IsString()
     @ApiPropertyOptional({ example: 'https://personal.link' })
     readonly link?: string;
+
+    @IsNotEmpty()
+  @IsString()
+  @ApiPropertyOptional({ example: '1100' })
+  readonly order: string;
   
     @IsNotEmpty()
     @IsIn(['так', 'ні'])

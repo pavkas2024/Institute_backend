@@ -14,7 +14,7 @@ export class CreateStaffDto {
   @ApiPropertyOptional({ example: 'https://someurl.com/photo.jpg' })
   readonly photo?: string;
 
-  @IsNotEmpty()
+  
   @IsIn(['так', 'ні'])
   @ApiPropertyOptional({ example: 'так', enum: ['так', 'ні'] })
   readonly council: 'так' | 'ні';
@@ -23,6 +23,11 @@ export class CreateStaffDto {
   @IsString()
   @ApiPropertyOptional({ example: 'https://personal.link' })
   readonly link?: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiPropertyOptional({ example: '1100' })
+  readonly order: string;
 
   @IsOptional()
   @IsObject()

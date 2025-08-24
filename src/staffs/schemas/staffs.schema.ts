@@ -11,6 +11,9 @@ export class Staff extends Document {
   @Prop({ required: false, default: '' })
   link?: string;
 
+  @Prop({ required: true })
+  order: string;
+
   @Prop({ 
     required: true,
     enum: ['так', 'ні'],   // обмеження значень рядка
