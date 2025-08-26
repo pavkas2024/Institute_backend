@@ -39,7 +39,7 @@ export class Intproject extends Document {
               link: { type: String, required: false, default: '' },
             },
           ],
-          required: true,
+          required: false,
           default: [],
         },
       },
@@ -52,14 +52,14 @@ export class Intproject extends Document {
       head: string;
       title: string;
       results?: string;
-      partners: { title: string; link?: string }[];
+      partners?: { title: string; link?: string }[];
     };
     en: {
       context?: string;
       head: string;
       title: string;
       results?: string;
-      partners: { title: string; link?: string }[];
+      partners?: { title: string; link?: string }[];
     };
   };
 

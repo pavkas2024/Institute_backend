@@ -36,6 +36,7 @@ class TranslationSubDto {
   @ApiPropertyOptional({ example: 'Результати дослідження' })
   results?: string;
 
+  @IsOptional()
   @IsArray()
   @ValidateNested({ each: true })
   @Type(() => PartnerDto)
@@ -43,7 +44,7 @@ class TranslationSubDto {
     type: [PartnerDto],
     example: [{ title: 'Проєкт', link: 'https://univ.kiev.ua' }],
   })
-  partners: PartnerDto[];
+  partners?: PartnerDto[];
 }
 
 export class ResponseIntprojectDto {
