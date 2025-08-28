@@ -7,7 +7,7 @@ import {
 
 
   export class UpdateContactDto {
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     readonly build: string;
 
@@ -15,7 +15,7 @@ import {
     @IsString()
     readonly corp?: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     readonly indexPost: string;
 
@@ -27,15 +27,15 @@ import {
     @IsString()
     readonly linkAcademy?: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     readonly email: string;
 
-    @IsNotEmpty()
+    @IsOptional()
     @IsString()
     readonly phone: string;
   
-    @IsNotEmpty()
+    @IsOptional()
     @IsObject()
     readonly translates: {
       uk: {

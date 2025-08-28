@@ -7,7 +7,7 @@ import {
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
   
   export class UpdateInstitutDto {
-    @IsNotEmpty()
+    @IsOptional()
   @IsObject()
   @ApiProperty({
     description: 'Translated fields for Ukrainian and English',
