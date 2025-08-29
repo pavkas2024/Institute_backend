@@ -112,7 +112,7 @@ export class CollaborationsController {
             new ParseFilePipe({
                 validators: [
                     new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-                    new FileTypeValidator({ fileType: '.(png|jpeg|jpg|web)' }),
+                    new FileTypeValidator({ fileType: '.(png|jpeg|jpg|webp)' }),
                 ],
                 fileIsRequired: false,
             }),
