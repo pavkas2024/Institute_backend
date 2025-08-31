@@ -15,22 +15,15 @@ export class Institutedocument extends Document {
     required: true,
   })
   translates: {
-    uk: {
-      title: string;
-    };
-    en: {
-      title: string;
-    };
+    uk: { title: string };
+    en: { title: string };
   };
 
   @Prop()
   year: string;
 
   @Prop()
-  link: string; // посилання на файл (Google Drive)
-
-  @Prop()
-  driveFileId: string; // додали поле для зберігання fileId на Google Drive
+  link: string; // локальний шлях до файлу, напр. /uploads/uuid-filename.pdf
 }
 
 export const InstitutedocumentSchema = SchemaFactory.createForClass(Institutedocument);

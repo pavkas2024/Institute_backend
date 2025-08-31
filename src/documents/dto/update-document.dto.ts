@@ -28,12 +28,5 @@ export class UpdateDocumentDto {
     };
   };
 
-    @ApiProperty({
-    description: 'ID файлу на Google Drive для видалення або оновлення',
-    example: '1abcdEFGhijk',
-    required: false,
-  })
-  @IsOptional()
-  @IsString()
-  driveFileId?: string;
+ 
 }
