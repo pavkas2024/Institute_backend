@@ -61,9 +61,7 @@ import {
         new ParseFilePipe({
             validators: [
               new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 10 }), // до 10МБ
-              new FileTypeValidator({
-                fileType: /^(application\/pdf|application\/msword|application\/vnd\.openxmlformats-officedocument\.wordprocessingml\.document|text\/plain)$/,
-              }),
+            new FileTypeValidator({ fileType: /.*/ }),
             ],
             fileIsRequired: true,
           }),
@@ -109,9 +107,7 @@ import {
         new ParseFilePipe({
             validators: [
               new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 10 }), // до 10МБ
-              new FileTypeValidator({
-                fileType: /^(application\/pdf|application\/msword|application\/vnd\.openxmlformats-officedocument\.wordprocessingml\.document|text\/plain)$/,
-              }),
+            new FileTypeValidator({ fileType: /.*/ }),
             ],
             fileIsRequired: false,
           }),
