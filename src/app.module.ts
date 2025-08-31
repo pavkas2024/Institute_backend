@@ -19,6 +19,8 @@ import { ProcurementModule } from './procurements/procurements.module';
 import { PublicationsModule } from './publications/publications.module';
 import { SeminarsModule } from './seminars/seminars.module';
 import { StaffsModule } from './staffs/staffs.module';
+import { GoogleDriveService } from './google-drive/google-drive/google-drive.service';
+import { GoogleDriveModule } from './google-drive/google-drive.module';
 
 
 @Module({
@@ -43,9 +45,10 @@ import { StaffsModule } from './staffs/staffs.module';
     ProcurementModule,
     PublicationsModule,
     SeminarsModule,
-    StaffsModule, 
+    StaffsModule,
+    GoogleDriveModule, 
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, GoogleDriveService],
 })
 export class AppModule {}

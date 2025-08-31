@@ -3,9 +3,6 @@ import { Document } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Institutedocument extends Document {
-  @Prop({ required: true })
-  link: string;
-
   @Prop({
     type: {
       uk: {
@@ -25,6 +22,15 @@ export class Institutedocument extends Document {
       title: string;
     };
   };
+
+  @Prop()
+  year: string;
+
+  @Prop()
+  link: string; // посилання на файл (Google Drive)
+
+  @Prop()
+  driveFileId: string; // додали поле для зберігання fileId на Google Drive
 }
 
-export const InstitutedocumentsSchema = SchemaFactory.createForClass(Institutedocument);
+export const InstitutedocumentSchema = SchemaFactory.createForClass(Institutedocument);

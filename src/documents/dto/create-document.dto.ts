@@ -10,6 +10,15 @@ export class CreateDocumentDto {
   @IsUrl()
   link: string;
 
+      @ApiProperty({
+    description: 'ID файлу на Google Drive для видалення або оновлення',
+    example: '1abcdEFGhijk',
+    required: false,
+  })
+   @IsNotEmpty()
+  @IsString()
+  driveFileId: string;
+
   @ApiProperty({
     description: 'Переклади назв документа',
     example: {

@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsString, IsUrl, IsObject } from 'class-validator';
+import { IsNotEmpty, IsString, IsUrl, IsObject, IsOptional } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateDocumentDto {
@@ -27,4 +27,13 @@ export class UpdateDocumentDto {
       title: string;
     };
   };
+
+    @ApiProperty({
+    description: 'ID файлу на Google Drive для видалення або оновлення',
+    example: '1abcdEFGhijk',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  driveFileId?: string;
 }
