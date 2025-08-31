@@ -34,9 +34,8 @@ import {
     }
   
     private getFilePath(fileLink: string) {
-      // Повний шлях до файлу на диску
-      return join(__dirname, '..', '..', fileLink);
-    }
+        return join(__dirname, '..', '..', fileLink.replace(/^\/uploads\//, 'uploads/'));
+      }
   
     @Get()
     async getAllDocuments(): Promise<Institutedocument[]> {
