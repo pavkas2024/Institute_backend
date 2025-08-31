@@ -4,47 +4,55 @@ import toStream = require('buffer-to-stream');
 
 @Injectable()
 export class CloudinaryService {
-  async uploadFile(
+  // -------------------
+  // Для зображень
+  // -------------------
+  async uploadImage(
     file: Express.Multer.File,
   ): Promise<UploadApiErrorResponse | UploadApiResponse> {
-    return new Promise<UploadApiErrorResponse | UploadApiResponse>(
-      (resolve, reject) => {
-        // Визначаємо тип: PDF → raw, інакше → auto
-        let resourceType: 'image' | 'raw' | 'video' | 'auto' = 'auto';
-
-        if (file.mimetype === 'application/pdf') {
-          resourceType = 'raw';
-        }
-
-        const upload = v2.uploader.upload_stream(
-          { resource_type: resourceType },
-          (error, result) => {
-            if (error) return reject(error);
-            resolve(result);
-          },
-        );
-
-        toStream(file.buffer).pipe(upload);
-      },
-    );
+    return new Promise<UploadApiErrorResponse | UploadApiResponse>((resolve, reject) => {
+      const upload = v2.uploader.upload_stream({ resource_type: 'image' }, (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      });
+      toStream(file.buffer).pipe(upload);
+    });
   }
 
-  async deleteFile(
+  async deleteImage(
     publicId: string,
-    resourceType: 'image' | 'raw' | 'video' | 'auto' = 'auto',
   ): Promise<UploadApiErrorResponse | UploadApiResponse> {
-    return new Promise<UploadApiErrorResponse | UploadApiResponse>(
-      (resolve, reject) => {
-        v2.uploader.destroy(
-          publicId,
-          { resource_type: resourceType },
-          (error, result) => {
-            if (error) return reject(error);
-            resolve(result);
-          },
-        );
-      },
-    );
+    return new Promise<UploadApiErrorResponse | UploadApiResponse>((resolve, reject) => {
+      v2.uploader.destroy(publicId, { resource_type: 'image' }, (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      });
+    });
+  }
+
+  // -------------------
+  // Для PDF / архівів
+  // -------------------
+  async uploadPdf(
+    file: Express.Multer.File,
+  ): Promise<UploadApiErrorResponse | UploadApiResponse> {
+    return new Promise<UploadApiErrorResponse | UploadApiResponse>((resolve, reject) => {
+      const upload = v2.uploader.upload_stream({ resource_type: 'raw' }, (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      });
+      toStream(file.buffer).pipe(upload);
+    });
+  }
+
+  async deletePdf(
+    publicId: string,
+  ): Promise<UploadApiErrorResponse | UploadApiResponse> {
+    return new Promise<UploadApiErrorResponse | UploadApiResponse>((resolve, reject) => {
+      v2.uploader.destroy(publicId, { resource_type: 'raw' }, (error, result) => {
+        if (error) return reject(error);
+        resolve(result);
+      });
+    });
   }
 }
-

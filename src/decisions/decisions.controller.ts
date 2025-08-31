@@ -85,7 +85,7 @@ export class DecisionsController {
             let fileUrl: string | undefined;
 
         if (file) {
-            const fileResponse = await this.cloudinaryService.uploadFile(file);
+            const fileResponse = await this.cloudinaryService.uploadPdf(file);
             fileUrl = fileResponse.secure_url;
         }
 
@@ -155,10 +155,10 @@ export class DecisionsController {
             if (prevDocument.link) {
                 const oldFilename = this.decisionsService.extractFilenameFromUrl(prevDocument.link);
     
-                await this.cloudinaryService.deleteFile(oldFilename);
+                await this.cloudinaryService.deletePdf(oldFilename);
             }
         
-            const uploadResult = await this.cloudinaryService.uploadFile(file);
+            const uploadResult = await this.cloudinaryService.uploadPdf(file);
     
             updatedFileUrl = uploadResult.secure_url;
         }
@@ -190,7 +190,7 @@ export class DecisionsController {
     if (document.link) {
         const filename = this.decisionsService.extractFilenameFromUrl(document.link);
         
-        await this.cloudinaryService.deleteFile(filename);
+        await this.cloudinaryService.deletePdf(filename);
     }
 
     return this.decisionsService.deleteById(id);

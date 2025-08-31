@@ -63,7 +63,7 @@ export class JournalsController {
          new ParseFilePipe({
              validators: [
                  new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-                 new FileTypeValidator({ fileType: '.(png|jpeg|jpg|web)' }),
+                 new FileTypeValidator({ fileType: '.(png|jpeg|jpg|webp)' }),
              ],
              fileIsRequired: true,
          }),
@@ -83,7 +83,7 @@ export class JournalsController {
      let photoUrl: string | undefined;
  
      if (photo) {
-         const fileResponse = await this.cloudinaryService.uploadFile(photo);
+         const fileResponse = await this.cloudinaryService.uploadImage(photo);
          photoUrl = fileResponse.secure_url;
      }
  
@@ -121,7 +121,7 @@ export class JournalsController {
          new ParseFilePipe({
              validators: [
                  new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-                 new FileTypeValidator({ fileType: '.(png|jpeg|jpg|web)' }),
+                 new FileTypeValidator({ fileType: '.(png|jpeg|jpg|webp)' }),
              ],
              fileIsRequired: false,
          }),
@@ -145,10 +145,10 @@ export class JournalsController {
          if (prevJournal.photo) {
              const oldFilename = this.journalsService.extractFilenameFromUrl(prevJournal.photo);
  
-             await this.cloudinaryService.deleteFile(oldFilename);
+             await this.cloudinaryService.deleteImage(oldFilename);
          }
          // Завантажити нове фото
-         const uploadResult = await this.cloudinaryService.uploadFile(photo);
+         const uploadResult = await this.cloudinaryService.uploadImage(photo);
  
          updatedPhotoUrl = uploadResult.secure_url;
      }
@@ -179,7 +179,7 @@ export class JournalsController {
      if (journals.photo) {
          const filename = this.journalsService.extractFilenameFromUrl(journals.photo);
         
-         await this.cloudinaryService.deleteFile(filename);
+         await this.cloudinaryService.deleteImage(filename);
      }
  
      return this.journalsService.deleteById(id);
@@ -205,7 +205,7 @@ export class JournalsController {
      }
  
      const filename = this.journalsService.extractFilenameFromUrl(journals.photo);
-     await this.cloudinaryService.deleteFile(filename);
+     await this.cloudinaryService.deleteImage(filename);
  
      return this.journalsService.updateById(id, { photo: '' });
      }

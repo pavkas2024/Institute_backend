@@ -61,7 +61,7 @@ export class StaffsController {
         new ParseFilePipe({
             validators: [
                 new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-                new FileTypeValidator({ fileType: '.(png|jpeg|jpg|web)' }),
+                new FileTypeValidator({ fileType: '.(png|jpeg|jpg|webp)' }),
             ],
             fileIsRequired: false,
         }),
@@ -81,7 +81,7 @@ export class StaffsController {
     let photoUrl: string | undefined;
 
     if (photo) {
-        const fileResponse = await this.cloudinaryService.uploadFile(photo);
+        const fileResponse = await this.cloudinaryService.uploadImage(photo);
         photoUrl = fileResponse.secure_url;
     }
 
@@ -112,7 +112,7 @@ export class StaffsController {
         new ParseFilePipe({
             validators: [
                 new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-                new FileTypeValidator({ fileType: '.(png|jpeg|jpg|web)' }),
+                new FileTypeValidator({ fileType: '.(png|jpeg|jpg|webp)' }),
             ],
             fileIsRequired: false,
         }),
@@ -144,10 +144,10 @@ export class StaffsController {
         if (prevStaff.photo) {
             const oldFilename = this.staffsService.extractFilenameFromUrl(prevStaff.photo);
 
-            await this.cloudinaryService.deleteFile(oldFilename);
+            await this.cloudinaryService.deleteImage(oldFilename);
         }
         // Завантажити нове фото
-        const uploadResult = await this.cloudinaryService.uploadFile(photo);
+        const uploadResult = await this.cloudinaryService.uploadImage(photo);
 
         updatedPhotoUrl = uploadResult.secure_url;
     }
@@ -177,7 +177,7 @@ export class StaffsController {
 
     if (staff.photo) {
         const filename = this.staffsService.extractFilenameFromUrl(staff.photo);
-        await this.cloudinaryService.deleteFile(filename);
+        await this.cloudinaryService.deleteImage(filename);
     }
 
     return this.staffsService.deleteById(id);
@@ -203,7 +203,7 @@ export class StaffsController {
     }
 
     const filename = this.staffsService.extractFilenameFromUrl(staff.photo);
-    await this.cloudinaryService.deleteFile(filename);
+    await this.cloudinaryService.deleteImage(filename);
 
     return this.staffsService.updateById(id, { photo: '' });
     }

@@ -81,7 +81,7 @@ export class CollaborationsController {
         let photoUrl: string | undefined;
 
         if (photo) {
-            const fileResponse = await this.cloudinaryService.uploadFile(photo);
+            const fileResponse = await this.cloudinaryService.uploadImage(photo);
             photoUrl = fileResponse.secure_url;
         }
         
@@ -144,10 +144,10 @@ export class CollaborationsController {
             if (prevCollaboration.photo) {
                 const oldFilename = this.collaborationsService.extractFilenameFromUrl(prevCollaboration.photo);
 
-                await this.cloudinaryService.deleteFile(oldFilename);
+                await this.cloudinaryService.deleteImage(oldFilename);
             }
             // Завантажити нове фото
-            const uploadResult = await this.cloudinaryService.uploadFile(photo);
+            const uploadResult = await this.cloudinaryService.uploadImage(photo);
 
             updatedPhotoUrl = uploadResult.secure_url;
         }
@@ -177,7 +177,7 @@ export class CollaborationsController {
 
         if (collaboration.photo) {
             const filename = this.collaborationsService.extractFilenameFromUrl(collaboration.photo);
-            await this.cloudinaryService.deleteFile(filename);
+            await this.cloudinaryService.deleteImage(filename);
         }
     
         return this.collaborationsService.deleteById(id);
@@ -203,7 +203,7 @@ export class CollaborationsController {
         }
         
         const filename = this.collaborationsService.extractFilenameFromUrl(collaboration.photo);
-        await this.cloudinaryService.deleteFile(filename);
+        await this.cloudinaryService.deleteImage(filename);
     
         return this.collaborationsService.updateById(id, { photo: '' });
     }

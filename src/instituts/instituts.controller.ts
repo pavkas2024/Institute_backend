@@ -63,7 +63,7 @@ export class InstitutsController {
          new ParseFilePipe({
              validators: [
                  new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-                 new FileTypeValidator({ fileType: '.(png|jpeg|jpg|web)' }),
+                 new FileTypeValidator({ fileType: '.(png|jpeg|jpg|webp)' }),
              ],
              fileIsRequired: false,
          }),
@@ -83,7 +83,7 @@ export class InstitutsController {
      let photoUrl: string | undefined;
  
      if (photo) {
-         const fileResponse = await this.cloudinaryService.uploadFile(photo);
+         const fileResponse = await this.cloudinaryService.uploadImage(photo);
          photoUrl = fileResponse.secure_url;
      }
  
@@ -121,7 +121,7 @@ export class InstitutsController {
          new ParseFilePipe({
              validators: [
                  new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-                 new FileTypeValidator({ fileType: '.(png|jpeg|jpg|web)' }),
+                 new FileTypeValidator({ fileType: '.(png|jpeg|jpg|webp)' }),
              ],
              fileIsRequired: false,
          }),
@@ -145,10 +145,10 @@ export class InstitutsController {
          if (prevInstitut.photo) {
              const oldFilename = this.institutsService.extractFilenameFromUrl(prevInstitut.photo);
  
-             await this.cloudinaryService.deleteFile(oldFilename);
+             await this.cloudinaryService.deleteImage(oldFilename);
          }
          // Завантажити нове фото
-         const uploadResult = await this.cloudinaryService.uploadFile(photo);
+         const uploadResult = await this.cloudinaryService.uploadImage(photo);
  
          updatedPhotoUrl = uploadResult.secure_url;
      }
@@ -179,7 +179,7 @@ export class InstitutsController {
      if (institut.photo) {
          const filename = this.institutsService.extractFilenameFromUrl(institut.photo);
         
-         await this.cloudinaryService.deleteFile(filename);
+         await this.cloudinaryService.deleteImage(filename);
      }
  
      return this.institutsService.deleteById(id);
@@ -205,7 +205,7 @@ export class InstitutsController {
      }
  
      const filename = this.institutsService.extractFilenameFromUrl(institut.photo);
-     await this.cloudinaryService.deleteFile(filename);
+     await this.cloudinaryService.deleteImage(filename);
  
      return this.institutsService.updateById(id, { photo: '' });
      }

@@ -65,7 +65,7 @@ export class SeminarsController {
             new ParseFilePipe({
                 validators: [
                     new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-                    new FileTypeValidator({ fileType: '.(png|jpeg|jpg|web)' }),
+                    new FileTypeValidator({ fileType: '.(png|jpeg|jpg|webp)' }),
                 ],
                 fileIsRequired: false,
             }),
@@ -83,7 +83,7 @@ export class SeminarsController {
             
                 await Promise.all(
                     photos.map(async (photo) => {
-                        const fileResponse = await this.cloudinaryService.uploadFile(photo);
+                        const fileResponse = await this.cloudinaryService.uploadImage(photo);
                         const photoUrl = fileResponse.secure_url;
                         arrUrl.push(photoUrl);
                     }),
@@ -127,7 +127,7 @@ export class SeminarsController {
             new ParseFilePipe({
                 validators: [
                     new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-                    new FileTypeValidator({ fileType: '.(png|jpeg|jpg|web)' }),
+                    new FileTypeValidator({ fileType: '.(png|jpeg|jpg|webp)' }),
                 ],
                 fileIsRequired: false,
             }),
@@ -153,7 +153,7 @@ export class SeminarsController {
 
                     await Promise.all(
                         photosUrl.map(async (name) => {
-                            await this.cloudinaryService.deleteFile(name);
+                            await this.cloudinaryService.deleteImage(name);
                         }),
                     );
                 } 
@@ -161,7 +161,7 @@ export class SeminarsController {
                 
                 await Promise.all(
                     photos.map(async (photo) => {
-                    const fileResponse = await this.cloudinaryService.uploadFile(photo);
+                    const fileResponse = await this.cloudinaryService.uploadImage(photo);
                     const photoUrl = fileResponse.secure_url;
                     arrUrl.push(photoUrl);
                     }),
@@ -203,7 +203,7 @@ export class SeminarsController {
       await Promise.all(
         photosUrl.map(async (name) => {
             const filename = this.seminarsService.extractFilenameFromUrl(name);
-          await this.cloudinaryService.deleteFile(filename);
+          await this.cloudinaryService.deleteImage(filename);
         }),
       );
     }
@@ -233,7 +233,7 @@ export class SeminarsController {
       await Promise.all(
         photosUrl.map(async (name) => {
             const filename = this.seminarsService.extractFilenameFromUrl(name);
-            await this.cloudinaryService.deleteFile(filename);
+            await this.cloudinaryService.deleteImage(filename);
         }),
       );
 

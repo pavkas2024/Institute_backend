@@ -88,7 +88,7 @@ export class ProcurementsController {
             let fileUrl: string | undefined;
 
         if (file) {
-            const fileResponse = await this.cloudinaryService.uploadFile(file);
+            const fileResponse = await this.cloudinaryService.uploadPdf(file);
             fileUrl = fileResponse.secure_url;
         }
 
@@ -155,10 +155,10 @@ export class ProcurementsController {
             if (prevProcurement.file) {
                 const oldFilename = this.procurementsService.extractFilenameFromUrl(prevProcurement.file);
     
-                await this.cloudinaryService.deleteFile(oldFilename);
+                await this.cloudinaryService.deletePdf(oldFilename);
             }
         
-            const uploadResult = await this.cloudinaryService.uploadFile(file);
+            const uploadResult = await this.cloudinaryService.uploadPdf(file);
     
             updatedFileUrl = uploadResult.secure_url;
         }
@@ -190,7 +190,7 @@ export class ProcurementsController {
     if (procurement.file) {
         const filename = this.procurementsService.extractFilenameFromUrl(procurement.file);
         
-        await this.cloudinaryService.deleteFile(filename);
+        await this.cloudinaryService.deletePdf(filename);
     }
 
     return this.procurementsService.deleteById(id);
