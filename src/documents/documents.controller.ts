@@ -23,20 +23,25 @@ import {
   import { Institutedocument } from './schemas/documents.schema';
   import { v4 as uuidv4 } from 'uuid';
   
-  const BASE_URL = process.env.BASE_URL;
-  
   @ApiTags('Documents')
   @Controller('documents')
   export class DocumentsController {
     constructor(private documentsService: DocumentsService) {}
   
+    // буду формувати URL з process.env під час виконання
     private getUploadPath(fileName: string) {
-      return `${process.env.BASE_URL}/uploads/${fileName}`;
+      const BASE_URL = process.env.BASE_URL;
+      if (!BASE_URL) {
+        throw new Error('BASE_URL is not defined in .env');
+      }
+      return `${BASE_URL}/uploads/${fileName}`;
     }
   
+    // зворотній шлях для видалення файлу
     private getFilePath(fileLink: string) {
-      // зворотній шлях на файлову систему
-      return join(__dirname, '..', '..', 'uploads', fileLink.split('/').pop());
+      const parts = fileLink.split('/');
+      const fileName = parts[parts.length - 1];
+      return join(__dirname, '..', '..', 'uploads', fileName);
     }
   
     @Get()
@@ -53,10 +58,7 @@ import {
       FileInterceptor('link', {
         storage: diskStorage({
           destination: './uploads',
-          filename: (req, file, callback) => {
-            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
-            callback(null, uniqueSuffix + extname(file.originalname));
-          },
+          filename: (_, file, cb) => cb(null, `${Date.now()}-${Math.round(Math.random() * 1e9)}${extname(file.originalname)}`),
         }),
       }),
     )
@@ -64,7 +66,7 @@ import {
       @Body(new ValidationPipe({ transform: true })) body: any,
       @UploadedFile(
         new ParseFilePipe({
-          validators: [new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 10 })],
+          validators: [new MaxFileSizeValidator({ maxSize: 10 * 1024 * 1024 })], // 10MB
           fileIsRequired: true,
         }),
       )
@@ -94,7 +96,7 @@ import {
       FileInterceptor('link', {
         storage: diskStorage({
           destination: './uploads',
-          filename: (req, file, cb) => cb(null, `${uuidv4()}-${file.originalname}`),
+          filename: (_, file, cb) => cb(null, `${uuidv4()}-${file.originalname}`),
         }),
       }),
     )
@@ -103,7 +105,7 @@ import {
       @Body(new ValidationPipe({ transform: true })) body: any,
       @UploadedFile(
         new ParseFilePipe({
-          validators: [new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 10 })],
+          validators: [new MaxFileSizeValidator({ maxSize: 10 * 1024 * 1024 })],
           fileIsRequired: false,
         }),
       )
@@ -121,7 +123,6 @@ import {
       let updatedLink = prevDocument.link;
   
       if (file) {
-        // видаляємо старий файл
         if (prevDocument.link) {
           await unlink(this.getFilePath(prevDocument.link)).catch(() => null);
         }
