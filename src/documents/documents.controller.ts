@@ -31,12 +31,12 @@ import {
     constructor(private documentsService: DocumentsService) {}
   
     private getUploadPath(fileName: string) {
-      return `${BASE_URL}/uploads/${fileName}`;
+      return `${process.env.BASE_URL}/uploads/${fileName}`;
     }
   
     private getFilePath(fileLink: string) {
       // зворотній шлях на файлову систему
-      return join(__dirname, '..', '..', fileLink.replace(new RegExp(`^${BASE_URL}/uploads/`), 'uploads/'));
+      return join(__dirname, '..', '..', 'uploads', fileLink.split('/').pop());
     }
   
     @Get()
