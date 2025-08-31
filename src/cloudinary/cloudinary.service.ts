@@ -9,25 +9,42 @@ export class CloudinaryService {
   ): Promise<UploadApiErrorResponse | UploadApiResponse> {
     return new Promise<UploadApiErrorResponse | UploadApiResponse>(
       (resolve, reject) => {
-        const upload = v2.uploader.upload_stream({ resource_type: 'auto' }, (error, result) => {
-          if (error) return reject(error);
-          resolve(result);
-        });
+        // Визначаємо тип: PDF → raw, інакше → auto
+        let resourceType: 'image' | 'raw' | 'video' | 'auto' = 'auto';
+
+        if (file.mimetype === 'application/pdf') {
+          resourceType = 'raw';
+        }
+
+        const upload = v2.uploader.upload_stream(
+          { resource_type: resourceType },
+          (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
+          },
+        );
+
         toStream(file.buffer).pipe(upload);
       },
     );
   }
 
   async deleteFile(
-    name: string,
+    publicId: string,
+    resourceType: 'image' | 'raw' | 'video' | 'auto' = 'auto',
   ): Promise<UploadApiErrorResponse | UploadApiResponse> {
     return new Promise<UploadApiErrorResponse | UploadApiResponse>(
       (resolve, reject) => {
-        v2.uploader.destroy(name, (error, result) => {
-          if (error) return reject(error);
-          resolve(result);
-        });
+        v2.uploader.destroy(
+          publicId,
+          { resource_type: resourceType },
+          (error, result) => {
+            if (error) return reject(error);
+            resolve(result);
+          },
+        );
       },
     );
   }
 }
+
