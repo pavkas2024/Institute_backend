@@ -59,10 +59,12 @@ import {
       @Body() body: any,
       @UploadedFile(
         new ParseFilePipe({
-          validators: [
-            new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 10 }),
-            new FileTypeValidator({ fileType: 'application/pdf|text/plain' }),
-          ],
+            validators: [
+                new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 10 }), // до 10МБ
+                new FileTypeValidator({
+                  fileType: /(pdf|plain|msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)$/,
+                }),
+              ],
           fileIsRequired: true,
         }),
       )
@@ -105,10 +107,12 @@ import {
       @Body() body: any,
       @UploadedFile(
         new ParseFilePipe({
-          validators: [
-            new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 10 }),
-            new FileTypeValidator({ fileType: 'application/pdf|text/plain' }),
-          ],
+            validators: [
+                new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 10 }), // до 10МБ
+                new FileTypeValidator({
+                  fileType: /(pdf|plain|msword|vnd\.openxmlformats-officedocument\.wordprocessingml\.document)$/,
+                }),
+              ],
           fileIsRequired: false,
         }),
       )
