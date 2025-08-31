@@ -10,18 +10,20 @@ import {
     UseInterceptors,
     ParseFilePipe,
     MaxFileSizeValidator,
-    FileTypeValidator,
+    ValidationPipe,
     HttpStatus,
     BadRequestException,
   } from '@nestjs/common';
   import { FileInterceptor } from '@nestjs/platform-express';
   import { ApiTags, ApiOperation, ApiConsumes, ApiResponse, ApiParam } from '@nestjs/swagger';
   import { diskStorage } from 'multer';
-  import { join } from 'path';
+  import { join, extname } from 'path';
   import { unlink } from 'fs/promises';
   import { DocumentsService } from './documents.service';
   import { Institutedocument } from './schemas/documents.schema';
   import { v4 as uuidv4 } from 'uuid';
+  
+  const BASE_URL = process.env.BASE_URL;
   
   @ApiTags('Documents')
   @Controller('documents')
@@ -29,13 +31,13 @@ import {
     constructor(private documentsService: DocumentsService) {}
   
     private getUploadPath(fileName: string) {
-      // URL для доступу через браузер
-      return `/uploads/${fileName}`;
+      return `${BASE_URL}/uploads/${fileName}`;
     }
   
     private getFilePath(fileLink: string) {
-        return join(__dirname, '..', '..', fileLink.replace(/^\/uploads\//, 'uploads/'));
-      }
+      // зворотній шлях на файлову систему
+      return join(__dirname, '..', '..', fileLink.replace(new RegExp(`^${BASE_URL}/uploads/`), 'uploads/'));
+    }
   
     @Get()
     async getAllDocuments(): Promise<Institutedocument[]> {
@@ -50,20 +52,21 @@ import {
     @UseInterceptors(
       FileInterceptor('link', {
         storage: diskStorage({
-          destination: join(__dirname, '..', '..', 'uploads'),
-          filename: (req, file, cb) => cb(null, `${uuidv4()}-${file.originalname}`),
+          destination: './uploads',
+          filename: (req, file, callback) => {
+            const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);
+            callback(null, uniqueSuffix + extname(file.originalname));
+          },
         }),
       }),
     )
     async createDocument(
-      @Body() body: any,
+      @Body(new ValidationPipe({ transform: true })) body: any,
       @UploadedFile(
         new ParseFilePipe({
-            validators: [
-              new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 10 }), // до 10МБ
-            ],
-            fileIsRequired: true,
-          }),
+          validators: [new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 10 })],
+          fileIsRequired: true,
+        }),
       )
       file: Express.Multer.File,
     ): Promise<Institutedocument> {
@@ -76,11 +79,7 @@ import {
       }
   
       const fileUrl = this.getUploadPath(file.filename);
-  
-      const data = {
-        ...body,
-        link: fileUrl,
-      };
+      const data = { ...body, link: fileUrl };
   
       return this.documentsService.create(data);
     }
@@ -94,22 +93,19 @@ import {
     @UseInterceptors(
       FileInterceptor('link', {
         storage: diskStorage({
-          destination: join(__dirname, '..', '..', 'uploads'),
+          destination: './uploads',
           filename: (req, file, cb) => cb(null, `${uuidv4()}-${file.originalname}`),
         }),
       }),
     )
     async updateDocument(
       @Param('id') id: string,
-      @Body() body: any,
+      @Body(new ValidationPipe({ transform: true })) body: any,
       @UploadedFile(
         new ParseFilePipe({
-            validators: [
-              new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 10 }), // до 10МБ
-            
-            ],
-            fileIsRequired: false,
-          }),
+          validators: [new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 10 })],
+          fileIsRequired: false,
+        }),
       )
       file?: Express.Multer.File,
     ): Promise<Institutedocument> {
@@ -132,11 +128,7 @@ import {
         updatedLink = this.getUploadPath(file.filename);
       }
   
-      const data = {
-        ...body,
-        link: updatedLink,
-      };
-  
+      const data = { ...body, link: updatedLink };
       return this.documentsService.updateById(id, data);
     }
   

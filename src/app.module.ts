@@ -4,6 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CloudinaryModule } from './cloudinary/cloudinary.module';
+
 import { CollaborationsModule } from './collaborations/collaborations.module';
 import { ContactsModule } from './contacts/contacts.module';
 import { DecisionsModule } from './decisions/decisions.module';
@@ -20,6 +21,9 @@ import { PublicationsModule } from './publications/publications.module';
 import { SeminarsModule } from './seminars/seminars.module';
 import { StaffsModule } from './staffs/staffs.module';
 
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 
 
 @Module({
@@ -29,6 +33,10 @@ import { StaffsModule } from './staffs/staffs.module';
       isGlobal: true,
     }),
     MongooseModule.forRoot(process.env.MONGODB_URI),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'uploads'), // фізичний шлях до uploads
+      serveRoot: '/uploads/', // URL доступу
+    }),
     CloudinaryModule,
     CollaborationsModule,
     ContactsModule,
