@@ -14,7 +14,11 @@ import {
     HttpStatus,
     ValidationPipe,
     BadRequestException, 
+    Res,
   } from '@nestjs/common';
+  import { Response } from 'express';
+import fetch from 'node-fetch';
+import { extname } from 'path';
   import {
     ApiTags,
     ApiOperation,
@@ -193,4 +197,43 @@ export class ProcurementsController {
     }
 
 
+//////////////
+    @Get(':id/file')
+    async getProcurementFile(@Param('id') id: string, @Res() res: Response) {
+        const procurement = await this.procurementsService.getById(id);
+        if (!procurement?.file) {
+            return res.status(404).send('File not found');
+        }
+
+        // стягуємо файл із Cloudinary
+        const response = await fetch(procurement.file);
+        if (!response.ok) {
+        return res.status(500).send('Error fetching file from Cloudinary');
+        }
+
+        // визначаємо MIME-тип із Cloudinary response
+        const contentType = response.headers.get('content-type') || 'application/octet-stream';
+
+        const buffer = Buffer.from(await response.arrayBuffer());
+
+        // виставляємо Content-Disposition
+        let disposition = 'attachment'; // за замовчуванням качаємо
+        if (contentType.startsWith('image/') || contentType === 'application/pdf') {
+            disposition = 'inline'; // відкриваємо у браузері
+        }
+
+        // витягуємо ім’я файлу з посилання
+        const urlParts = procurement.file.split('?')[0].split('/');
+        const filename = urlParts[urlParts.length - 1] || `file${extname(procurement.file)}`;
+
+        res.set({
+        'Content-Type': contentType,
+        'Content-Disposition': `${disposition}; filename="${filename}"`,
+        });
+
+        return res.send(buffer);
+    }
 }
+
+
+
