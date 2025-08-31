@@ -201,6 +201,8 @@ export class ProcurementsController {
     @Get(':id/file')
     async getProcurementFile(@Param('id') id: string, @Res() res: Response) {
         const procurement = await this.procurementsService.getById(id);
+        console.log('procurement:', procurement);
+console.log('procurement.file:', procurement?.file);
         if (!procurement?.file) {
             return res.status(404).send('File not found');
         }
