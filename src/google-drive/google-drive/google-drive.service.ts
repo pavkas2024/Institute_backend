@@ -8,13 +8,13 @@ export class GoogleDriveService {
 
   constructor() {
     const oauth2Client = new google.auth.OAuth2(
-      process.env.***REMOVED***,
-      process.env.***REMOVED***,
+      process.env.GOOGLE_CLIENT_ID,
+      process.env.GOOGLE_CLIENT_SECRET,
       process.env.GOOGLE_REDIRECT_URI,
     );
 
     oauth2Client.setCredentials({
-      refresh_token: process.env.***REMOVED***,
+      refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
     });
 
     this.drive = google.drive({ version: 'v3', auth: oauth2Client });
