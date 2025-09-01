@@ -55,7 +55,7 @@ export class Staff extends Document {
         acadTitle2: { type: String, required: false, default: '' },
         info: { type: String, required: false, default: '' },
         position: { type: String, required: true },
-        department: { type: String, required: true },
+        department: { type: String, required: false, default: ''  },
       },
       en: {
         name: { type: String, required: true },
@@ -66,7 +66,7 @@ export class Staff extends Document {
         acadTitle2: { type: String, required: false, default: '' },
         info: { type: String, required: false, default: '' },
         position: { type: String, required: true },
-        department: { type: String, required: true },
+        department: { type: String, required: false, default: ''  },
       },
     },
     required: true,
@@ -81,7 +81,7 @@ export class Staff extends Document {
       acadTitle2?: string;
       info?: string;
       position: string;
-      department: string;
+      department?: string;
     };
     en: {
       name: string;
@@ -92,7 +92,7 @@ export class Staff extends Document {
       acadTitle2?: string;
       info?: string;
       position: string;
-      department: string;
+      department?: string;
     };
   };
 

@@ -69,7 +69,7 @@ export class CreateStaffDto {
           degree: { type: 'string', example: 'кандидат наук', nullable: true },
           acadTitle: { type: 'string', example: 'доцент', nullable: true },
           position: { type: 'string', example: 'Науковий співробітник' },
-          department: { type: 'string', example: 'Відділ біології' },
+          department: { type: 'string', example: 'Відділ біології', nullable: true },
         },
       },
       en: {
@@ -81,7 +81,7 @@ export class CreateStaffDto {
           degree: { type: 'string', example: 'PhD', nullable: true },
           acadTitle: { type: 'string', example: 'Associate Professor', nullable: true },
           position: { type: 'string', example: 'Researcher' },
-          department: { type: 'string', example: 'Biology Department' },
+          department: { type: 'string', example: 'Biology Department', nullable: true },
         },
       },
     },
@@ -94,7 +94,7 @@ export class CreateStaffDto {
       degree?: string;
       acadTitle?: string;
       position: string;
-      department: string;
+      department?: string;
     };
     en: {
       name: string;
@@ -103,7 +103,7 @@ export class CreateStaffDto {
       degree?: string;
       acadTitle?: string;
       position: string;
-      department: string;
+      department?: string;
     };
   };
 
