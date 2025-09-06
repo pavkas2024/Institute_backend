@@ -2,6 +2,7 @@ import {
     IsNotEmpty,
     IsString,
     IsObject,
+    IsEnum,
   } from 'class-validator';
 
 
@@ -30,5 +31,8 @@ import {
     @IsNotEmpty()
     @IsString()
     readonly order: string;
+
+    @IsEnum(['sci', 'edu', 'pub', 'org', 'fin'])
+    role: 'sci' | 'edu' | 'pub' | 'org' | 'fin';
   }
   

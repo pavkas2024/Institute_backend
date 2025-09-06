@@ -41,6 +41,13 @@ export class Department extends Document {
 
   @Prop({ required: true })
   order: string;
+
+  @Prop({
+    required: true,
+    enum: ['sci', 'edu', 'pub', 'org', 'fin'],
+    type: String,
+  })
+  role: 'sci' | 'edu' | 'pub' | 'org' | 'fin';
 }
 
 export const DepartmentsSchema = SchemaFactory.createForClass(Department);
