@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsObject } from 'class-validator';
+import { IsNotEmpty, IsObject, IsString} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateDecisionDto {
@@ -22,4 +22,10 @@ export class CreateDecisionDto {
       title: string;
     };
   };
+
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({ example: '2025' })
+  readonly year: string;
 }

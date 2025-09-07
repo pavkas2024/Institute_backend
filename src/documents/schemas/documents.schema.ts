@@ -19,7 +19,7 @@ export class Institutedocument extends Document {
     en: { title: string };
   };
 
-  @Prop()
+  @Prop({ required: true})
   year: string;
 
   @Prop()

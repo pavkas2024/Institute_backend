@@ -29,4 +29,9 @@ export class CreateDocumentDto {
       title: string;
     };
   };
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({ example: '2025' })
+  readonly year: string;
 }

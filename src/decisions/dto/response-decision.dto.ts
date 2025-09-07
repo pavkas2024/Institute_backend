@@ -27,4 +27,9 @@ export class ResponseDecisionDto {
       title: string;
     };
   };
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({ example: '2025' })
+  readonly year: string;
 }

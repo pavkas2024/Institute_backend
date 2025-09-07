@@ -29,4 +29,9 @@ export class UpdateDecisionDto {
       title: string;
     };
   };
+
+
+  @IsString()
+  @ApiProperty({ example: '2025' })
+  readonly year?: string;
 }

@@ -25,6 +25,9 @@ export class Decision extends Document {
       title: string;
     };
   };
+
+  @Prop({ required: true})
+  year: string;
 }
 
 
