@@ -35,29 +35,28 @@ export class CloudinaryService {
   async uploadPdf(
     file: Express.Multer.File,
   ): Promise<UploadApiErrorResponse | UploadApiResponse> {
-    return new Promise<UploadApiErrorResponse | UploadApiResponse>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       const upload = v2.uploader.upload_stream(
         {
           resource_type: 'raw',
           public_id: file.originalname.split('.')[0], // ім'я без розширення
-          use_filename: true, // зберегти ім'я, яке завантажив користувач
-          unique_filename: false, 
+          use_filename: true,
+          unique_filename: false,
         },
         (error, result) => {
           if (error) return reject(error);
-  
-          // Формуємо посилання для відкриття PDF у браузері
-          if (result?.secure_url) {
-            result.secure_url = result.secure_url.replace(
-              '/upload/',
-              '/upload/fl_attachment=false/'
-            );
+
+      
+          if (result?.public_id) {
+            const cloudName = v2.config().cloud_name;
+            const extension = file.originalname.split('.').pop();
+            result.secure_url = `https://res.cloudinary.com/${cloudName}/raw/upload/fl_attachment:false/${result.public_id}.${extension}`;
           }
-  
+
           resolve(result);
         },
       );
-  
+
       toStream(file.buffer).pipe(upload);
     });
   }
@@ -65,11 +64,12 @@ export class CloudinaryService {
   async deletePdf(
     publicId: string,
   ): Promise<UploadApiErrorResponse | UploadApiResponse> {
-    return new Promise<UploadApiErrorResponse | UploadApiResponse>((resolve, reject) => {
+    return new Promise((resolve, reject) => {
       v2.uploader.destroy(publicId, { resource_type: 'raw' }, (error, result) => {
         if (error) return reject(error);
         resolve(result);
       });
     });
   }
+
 }
