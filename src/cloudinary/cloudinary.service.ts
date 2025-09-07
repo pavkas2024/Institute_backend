@@ -41,7 +41,7 @@ export class CloudinaryService {
           resource_type: 'raw',
           public_id: file.originalname.split('.')[0], // ім'я без розширення
           use_filename: true, // зберегти ім'я, яке завантажив користувач
-          unique_filename: true, // уникає колізій
+          unique_filename: false, 
         },
         (error, result) => {
           if (error) return reject(error);
