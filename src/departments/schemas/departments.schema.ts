@@ -7,16 +7,16 @@ export class Department extends Document {
     type: {
       uk: {
         title: { type: String, required: true },
-        shortTitle: { type: String, required: false, default: []},
-        head: { type: String, required: true },
-        description: { type: String, required: true },
+        shortTitle: { type: String, required: false, default: ''},
+        head: { type: String, required: false, default: ''},
+        description: { type: String, required: false, default: ''},
         projects: { type: [String], required: false, default: [] },
       },
       en: {
         title: { type: String, required: true },
-        shortTitle: { type: String, required: false, default: [] },
-        head: { type: String, required: true },
-        description: { type: String, required: true },
+        shortTitle: { type: String, required: false, default: '' },
+        head: { type: String, required: false, default: '' },
+        description: { type: String, required: false, default: ''},
         projects: { type: [String], required: false, default: [] },
       },
     },
@@ -26,15 +26,15 @@ export class Department extends Document {
     uk: {
       title: string;
       shortTitle?: string;
-      head: string;
-      description: string;
+      head?: string;
+      description?: string;
       projects?: string[];
     };
     en: {
       title: string;
       shortTitle?: string;
-      head: string;
-      description: string;
+      head?: string;
+      description?: string;
       projects?: string[];
     };
   };
