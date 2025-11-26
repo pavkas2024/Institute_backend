@@ -24,6 +24,21 @@ export class CreateStaffDto {
   @ApiPropertyOptional({ example: 'https://personal.link' })
   readonly link?: string;
 
+  @IsOptional()
+  @IsString()
+  @ApiPropertyOptional({ example: 'https://personal.link' })
+  readonly cv?: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiPropertyOptional({ example: 'https://personal.link' })
+  readonly pub?: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiPropertyOptional({ example: 'https://personal.link' })
+  readonly shortPub?: string;
+
   @IsNotEmpty()
   @IsString()
   @ApiPropertyOptional({ example: '1100' })

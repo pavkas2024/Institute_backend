@@ -20,6 +20,21 @@ export class UpdateStaffDto {
   readonly link?: string;
 
   @IsOptional()
+  @IsString()
+  @ApiPropertyOptional({ example: 'https://personal.link' })
+  readonly cv?: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiPropertyOptional({ example: 'https://personal.link' })
+  readonly pub?: string;
+
+  @IsOptional()
+  @IsString()
+  @ApiPropertyOptional({ example: 'https://personal.link' })
+  readonly shortPub?: string;
+
+  @IsOptional()
   @IsIn(['так', 'ні'])
   @ApiPropertyOptional({ example: 'так', enum: ['так', 'ні'] })
   readonly council: 'так' | 'ні';

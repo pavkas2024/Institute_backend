@@ -11,6 +11,15 @@ export class Staff extends Document {
   @Prop({ required: false, default: '' })
   link?: string;
 
+  @Prop({ required: false, default: '' })
+  cv?: string;
+
+  @Prop({ required: false, default: '' })
+  pub?: string;
+
+  @Prop({ required: false, default: '' })
+  shortPub?: string;
+
   @Prop({ required: true })
   order: string;
 
