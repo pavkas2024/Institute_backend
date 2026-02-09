@@ -19,8 +19,6 @@ export class Institutedocument extends Document {
     en: { title: string };
   };
 
-  @Prop({ required: true})
-  year: string;
 
   @Prop()
   link: string; // локальний шлях до файлу, напр. /uploads/uuid-filename.pdf

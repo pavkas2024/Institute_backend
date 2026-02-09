@@ -102,7 +102,7 @@ export class DepartmentsController {
     async updateDepartment(
         @Param('id') id: string, 
         @Body() body: any,
-    ): Promise<Department> {
+        ): Promise<Department> {
         if (typeof body.translates === 'string') {
             try {
                 body.translates = JSON.parse(body.translates);

@@ -6,19 +6,13 @@ import {
     Delete,
     Param,
     Body,
-    UploadedFile,
     UseInterceptors,
-    ParseFilePipe,
-    FileTypeValidator,
-    MaxFileSizeValidator,
-    ValidationPipe,
     HttpStatus,
     BadRequestException,
   } from '@nestjs/common';
   import { FileInterceptor } from '@nestjs/platform-express';
   import { ApiTags, ApiOperation, ApiConsumes, ApiResponse, ApiParam } from '@nestjs/swagger';
 
-  import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
   import { DocumentsService } from './documents.service';
   import { Institutedocument } from './schemas/documents.schema';
 
@@ -28,7 +22,6 @@ import {
   export class DocumentsController {
     constructor(
       private documentsService: DocumentsService,
-      private cloudinaryService: CloudinaryService,
     ) {}
  
 
@@ -44,17 +37,9 @@ import {
     @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request' })
     @UseInterceptors(FileInterceptor('link'))
     async createDocument(
-      @Body(new ValidationPipe({ transform: true })) body: any,
-      @UploadedFile(
-        new ParseFilePipe({
-          validators: [new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-            new FileTypeValidator({ fileType: 'application/pdf' }),
-        ],
-        fileIsRequired: true,
-        }),
-      )
-      link?: Express.Multer.File,
-    ): Promise<Institutedocument> {
+      @Body() 
+      body: any,
+      ): Promise<Institutedocument> {
       if (typeof body.translates === 'string') {
         try {
           body.translates = JSON.parse(body.translates);
@@ -63,16 +48,15 @@ import {
         }
       }
   
-      let fileUrl: string | undefined;
-      if (link) {
-        const fileResponse = await this.cloudinaryService.uploadPdf(link);
-        fileUrl = fileResponse.secure_url;
-    }
-  
-      
+      const required = ['translates'];
+      for (const key of required) {
+        if (!body[key]) {
+          throw new BadRequestException(`Field '${key}' is required`);
+        }
+      }
+    
     const data = {
       ...body,
-      link: fileUrl,
   };
 
   return this.documentsService.create(data);
@@ -87,18 +71,8 @@ import {
     @UseInterceptors(FileInterceptor('link'))
     async updateDocument(
       @Param('id') id: string,
-      @Body(new ValidationPipe({ transform: true })) body: any,
-      @UploadedFile(
-        new ParseFilePipe({
-          validators: [
-            new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-            new FileTypeValidator({ fileType: 'application/pdf' }),
-          ],
-          fileIsRequired: false,
-        }),
-      )
-      link?: Express.Multer.File,
-    ): Promise<Institutedocument> {
+      @Body() body: any,
+      ): Promise<Institutedocument> {
       // Перевірка та парсинг JSON у полі translates
       if (typeof body.translates === 'string') {
         try {
@@ -108,31 +82,7 @@ import {
         }
       }
     
-      // Отримуємо попередній документ
-      const prevDocument = await this.documentsService.getById(id);
-      let updatedFileUrl = prevDocument.link;
-    
-    
-      if (link) {
-    
-        if (prevDocument.link) {
-          const oldFilename = this.documentsService.extractFilenameFromUrl(prevDocument.link);
-          await this.cloudinaryService.deletePdf(oldFilename);
-        }
-    
-     
-        const uploadResult = await this.cloudinaryService.uploadPdf(link);
-        updatedFileUrl = uploadResult.secure_url;
-      }
-    
-      
-      const data = {
-        ...body,
-        link: updatedFileUrl,
-      };
-    
- 
-      return this.documentsService.updateById(id, data);
+      return this.documentsService.updateById(id, body);
     }
   
     @Delete(':id')
@@ -141,15 +91,7 @@ import {
     @ApiResponse({ status: HttpStatus.OK, description: 'Success', type: Institutedocument })
     @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request' })
     async deleteDocument(@Param('id') id: string): Promise<Institutedocument> {
-      const document = await this.documentsService.getById(id);
-  
-      if (document.link) {
-        const filename = this.documentsService.extractFilenameFromUrl(document.link);
-        
-        await this.cloudinaryService.deletePdf(filename);
-    }
-
-  
+      
       return this.documentsService.deleteById(id);
     }
   }

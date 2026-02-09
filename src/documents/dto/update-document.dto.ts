@@ -28,9 +28,6 @@ export class UpdateDocumentDto {
     };
   };
 
-  @IsNotEmpty()
-  @IsString()
-  @ApiProperty({ example: '2025' })
-  readonly year: string;
+
  
 }
