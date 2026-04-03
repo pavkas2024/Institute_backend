@@ -14,6 +14,7 @@ import {
     HttpStatus,
     BadRequestException, 
 } from '@nestjs/common';
+
 import {
     ApiTags,
     ApiOperation,
@@ -24,24 +25,26 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 
 import { CloudinaryService } from 'src/cloudinary/cloudinary.service';
-import { JournalsService } from './journals.service';
-import { Journal } from './schemas/journals.schema';
-import { ResponseJournalDto } from './dto/response-journal.dto';
+import { PageJournalsService } from './pagejournals.service';
+import { Pagejournal } from './schemas/pagejournals.schema';
+import { ResponsePageJournalDto } from './dto/response-pagejournal.dto';
 
-@ApiTags('Journals')
-@Controller('journals')
-export class JournalsController {
+
+@ApiTags('Pagejournals')
+@Controller('pagejournals')
+export class PageJournalsController {
+
 
     constructor(
-        private journalsService: JournalsService,
+        private pagejournalsService: PageJournalsService,
         private cloudinaryService: CloudinaryService,
     ) {}
 
      /////////////////////////////////////////////////////    
      @Get()
-     async getAllJournals(): Promise<Journal[]> {
+     async getAllPagejournals(): Promise<Pagejournal[]> {
  
-     return this.journalsService.getAll();
+     return this.pagejournalsService.getAll();
      }
      /////////////////////////////////////////////////////    
      @Post()
@@ -50,11 +53,11 @@ export class JournalsController {
      @ApiResponse({
      status: HttpStatus.OK,
      description: 'Success',
-     type: ResponseJournalDto,
+     type: ResponsePageJournalDto,
      })
      @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request' })
      @UseInterceptors(FileInterceptor('photo'))
-     async createJournal(
+     async createPagejournal(
      @Body()
      body: any, 
 
@@ -68,7 +71,7 @@ export class JournalsController {
          }),
      )
      photo: Express.Multer.File,
-     ): Promise<Journal> {
+     ): Promise<Pagejournal> {
  
     
        if (typeof body.translates === 'string') {
@@ -91,26 +94,28 @@ export class JournalsController {
          photo: photoUrl,
      };
  
-     return this.journalsService.create(data);
+     return this.pagejournalsService.create(data);
  
      }
  ///////////////////////////////////////
      @Get(':id')
-     async getJournal(
+     async getPagejournal(
      @Param('id')
      id: string,
-     ): Promise<Journal> {
-     return this.journalsService.getById(id);
+     ): Promise<Pagejournal> {
+     return this.pagejournalsService.getById(id);
      }
  ///////////////////////////////////////////////
      @Patch(':id')
+     @ApiOperation({ summary: 'Update journal' })
+     @ApiConsumes('multipart/form-data')
      @ApiResponse({
        status: HttpStatus.OK,
        description: 'Success',
-       type: ResponseJournalDto,
+       type: ResponsePageJournalDto,
    })
      @UseInterceptors(FileInterceptor('photo'))
-     async updateJournal(
+     async updatePagejournal(
      @Param('id')
      id: string,
      @Body()
@@ -126,7 +131,7 @@ export class JournalsController {
          }),
      )
      photo?: Express.Multer.File,
-     ): Promise<Journal> {
+     ): Promise<Pagejournal> {
  
      if (typeof body.translates === 'string') {
          try {
@@ -136,13 +141,13 @@ export class JournalsController {
          }
      }
  
-     const prevJournal = await this.journalsService.getById(id);
+     const prevJournal = await this.pagejournalsService.getById(id);
      let updatedPhotoUrl = prevJournal.photo;
  
      if (photo) {
          // Якщо було фото — видалити старе з cloudinary
          if (prevJournal.photo) {
-             const oldFilename = this.journalsService.extractFilenameFromUrl(prevJournal.photo);
+             const oldFilename = this.pagejournalsService.extractFilenameFromUrl(prevJournal.photo);
  
              await this.cloudinaryService.deleteImage(oldFilename);
          }
@@ -157,34 +162,35 @@ export class JournalsController {
          photo: updatedPhotoUrl,
      };
  
-     return this.journalsService.updateById(id, data);
+     return this.pagejournalsService.updateById(id, data);
      }
 
-      //////////////////////////////////////////////////
-      @Delete('photo/:id')
-      @ApiOperation({ summary: 'Delete photo from journal by Id (only for Admin)' })
-      @ApiParam({ name: 'id', required: true, description: 'Journal Id' })
-      @ApiResponse({
-      status: HttpStatus.OK,
-      description: 'Success',
-      type: ResponseJournalDto,
-      })
-      @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request' })
-      async deleteJournalPhoto(
-      @Param('id')
-      id: string,
-      ): Promise<Journal>  {
-      const journals = await this.journalsService.getById(id);
-  
-      if (!journals.photo) {
-          throw new BadRequestException('No photo to delete.');
-      }
-  
-      const filename = this.journalsService.extractFilenameFromUrl(journals.photo);
-      await this.cloudinaryService.deleteImage(filename);
-  
-      return this.journalsService.updateById(id, { photo: '' });
-      }
+
+     //////////////////////////////////////////////////
+     @Delete('photo/:id')
+     @ApiOperation({ summary: 'Delete photo from journal by Id (only for Admin)' })
+     @ApiParam({ name: 'id', required: true, description: 'Journal Id' })
+     @ApiResponse({
+     status: HttpStatus.OK,
+     description: 'Success',
+     type: ResponsePageJournalDto,
+     })
+     @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request' })
+     async deletePagejournalPhoto(
+     @Param('id')
+     id: string,
+     ): Promise<Pagejournal>  {
+     const journals = await this.pagejournalsService.getById(id);
+ 
+     if (!journals.photo) {
+         throw new BadRequestException('No photo to delete.');
+     }
+ 
+     const filename = this.pagejournalsService.extractFilenameFromUrl(journals.photo);
+     await this.cloudinaryService.deleteImage(filename);
+ 
+     return this.pagejournalsService.updateById(id, { photo: '' });
+     }
  /////////////////////////
      @Delete(':id')
      @ApiOperation({ summary: 'Delete journal by Id (only for Admin)' })
@@ -192,23 +198,43 @@ export class JournalsController {
      @ApiResponse({
      status: HttpStatus.OK,
      description: 'Success',
-     type: ResponseJournalDto,
+     type: ResponsePageJournalDto,
      })
      @ApiResponse({ status: HttpStatus.BAD_REQUEST, description: 'Bad Request' })
-     async deleteJournal(
+     async deletePagejournal(
      @Param('id')
      id: string,
-     ): Promise<Journal> {
-     const journals = await this.journalsService.getById(id);
+     ): Promise<Pagejournal> {
+     const journals = await this.pagejournalsService.getById(id);
  
      if (journals.photo) {
-         const filename = this.journalsService.extractFilenameFromUrl(journals.photo);
+         const filename = this.pagejournalsService.extractFilenameFromUrl(journals.photo);
         
          await this.cloudinaryService.deleteImage(filename);
      }
  
-     return this.journalsService.deleteById(id);
+     return this.pagejournalsService.deleteById(id);
      }
+ 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

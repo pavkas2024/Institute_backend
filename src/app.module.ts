@@ -23,6 +23,7 @@ import { StaffsModule } from './staffs/staffs.module';
 
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { PageJournalsModule } from './pagejournals/pagejournals.module';
 
 
 
@@ -53,6 +54,7 @@ import { join } from 'path';
     PublicationsModule,
     SeminarsModule,
     StaffsModule,
+    PageJournalsModule,
   ],
   controllers: [AppController],
   providers: [AppService],

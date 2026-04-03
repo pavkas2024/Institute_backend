@@ -1,15 +1,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Cloudinary } from './cloudinary';
+import { CloudinaryProvider } from './cloudinary';
+import { ConfigOptions } from 'cloudinary';
 
-describe('Cloudinary', () => {
-  let provider: Cloudinary;
+describe('CloudinaryProvider', () => {
+  let provider: ConfigOptions;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [Cloudinary],
+      providers: [CloudinaryProvider],
     }).compile();
 
-    provider = module.get<Cloudinary>(Cloudinary);
+    provider = module.get<ConfigOptions>('CLOUDINARY');
   });
 
   it('should be defined', () => {
