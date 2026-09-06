@@ -122,7 +122,10 @@ export class NewsController {
           new ParseFilePipe({
               validators: [
                   new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-                  new FileTypeValidator({ fileType: /image\/(png|jpeg|jpg|webp)/ }),
+                  new FileTypeValidator({ 
+                    fileType: /image\/(png|jpeg|jpg|webp)/,
+                    skipMagicNumbersValidation: true, 
+                }),
               ],
               fileIsRequired: false,
           }),
