@@ -145,6 +145,14 @@ export class NewsController {
       let updatedPhotoUrl = prevNew.photo;
   
       if (photo) {
+
+        console.log({ 
+            originalname: photo.originalname, 
+            mimetype: photo.mimetype, 
+            size: photo.size, 
+            bufferLength: photo.buffer?.length, 
+            firstBytes: photo.buffer?.subarray(0, 8).toString('hex'), 
+        });
           // Якщо було фото — видалити старе з cloudinary
           if (prevNew.photo) {
               const oldFilename = this.newsService.extractFilenameFromUrl(prevNew.photo);
