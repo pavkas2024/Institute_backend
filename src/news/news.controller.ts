@@ -64,7 +64,10 @@ export class NewsController {
           new ParseFilePipe({
               validators: [
                   new MaxFileSizeValidator({ maxSize: 1024 * 1024 * 4 }),
-                 // new FileTypeValidator({ fileType: 'image/(png|jpeg|jpg|webp)' }),
+                  new FileTypeValidator({ 
+                    fileType: /image\/(png|jpeg|jpg|webp)/,
+                    skipMagicNumbersValidation: true, 
+                }),
               ],
               fileIsRequired: false,
           }),
@@ -146,13 +149,13 @@ export class NewsController {
   
       if (photo) {
 
-        console.log({ 
-            originalname: photo.originalname, 
-            mimetype: photo.mimetype, 
-            size: photo.size, 
-            bufferLength: photo.buffer?.length, 
-            firstBytes: photo.buffer?.subarray(0, 8).toString('hex'), 
-        });
+       // console.log({ 
+       //     originalname: photo.originalname, 
+         //   mimetype: photo.mimetype, 
+           // size: photo.size, 
+            //bufferLength: photo.buffer?.length, 
+           // firstBytes: photo.buffer?.subarray(0, 8).toString('hex'), 
+       // });
           // Якщо було фото — видалити старе з cloudinary
           if (prevNew.photo) {
               const oldFilename = this.newsService.extractFilenameFromUrl(prevNew.photo);
