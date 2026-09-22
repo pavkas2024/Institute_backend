@@ -20,8 +20,8 @@ export class Institutedocument extends Document {
   };
 
 
-  @Prop()
-  link: string; // локальний шлях до файлу, напр. /uploads/uuid-filename.pdf
+  @Prop({ required: true })
+  link: string; // шлях до файлу, напр.
 }
 
 export const InstitutedocumentSchema = SchemaFactory.createForClass(Institutedocument);

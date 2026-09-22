@@ -3,11 +3,16 @@ import { Document } from 'mongoose';
 
 @Schema({ timestamps: true })
 export class Procurement extends Document {
-  @Prop({ required: true })
-  file: string;
+  // @Prop({ required: true })
+  // file: string;
 
   @Prop({ required: true })
   year: string;
+
+  @Prop({ required: true })
+  link: string;
+
+
 
   @Prop({
     type: {

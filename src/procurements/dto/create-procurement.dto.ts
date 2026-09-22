@@ -1,8 +1,15 @@
-import { IsNotEmpty, IsString,  IsObject } from 'class-validator';
+import { IsNotEmpty, IsString, IsUrl, IsObject } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateProcurementDto {
 
+  @ApiProperty({
+    description: 'Посилання на PDF файл',
+    example: 'https://....sample.pdf',
+  })
+  @IsNotEmpty()
+  @IsUrl()
+  link: string;
 
   @ApiProperty({
     description: 'Переклади назв документа',

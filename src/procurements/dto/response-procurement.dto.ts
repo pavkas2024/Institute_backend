@@ -3,6 +3,13 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class ResponseProcurementDto {
 
+  @ApiProperty({
+    description: 'Посилання на PDF файл',
+    example: 'https://....sample.pdf',
+  })
+  @IsNotEmpty()
+  @IsUrl()
+  link: string;
 
   @ApiProperty({
     description: 'Переклади назв документа',
@@ -23,13 +30,13 @@ export class ResponseProcurementDto {
     };
   };
 
-  @ApiProperty({
-    description: 'Посилання на PDF файл у Cloudinary',
-    example: 'https://res.cloudinary.com/demo/raw/upload/v1234567890/sample.pdf',
-  })
-  @IsNotEmpty()
-  @IsUrl()
-  file: string;
+  //@ApiProperty({
+  //  description: 'Посилання на PDF файл у Cloudinary',
+  //  example: 'https://res.cloudinary.com/demo/raw/upload/v1234567890/sample.pdf',
+ // })
+  //@IsNotEmpty()
+  //@IsUrl()
+  //file: string;
 
   @IsNotEmpty()
   @IsString()
