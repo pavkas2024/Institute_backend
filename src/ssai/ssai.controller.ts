@@ -8,6 +8,7 @@ import {
   Body,
   Param,
   Query,
+  BadRequestException, 
   ParseIntPipe,
   DefaultValuePipe,
 } from '@nestjs/common';
@@ -62,21 +63,37 @@ export class SsaiController {
 
   // Засідання семінару
 
+  
+ 
   @Get('sessions')
   @ApiOperation({ summary: 'Get SSAI sessions with pagination' })
   getSessions(
-    @Query('completed') completed = 'false',
-    @Query('page', new DefaultValuePipe(1), ParseIntPipe)
-    page: number,
-    @Query('limit', new DefaultValuePipe(10), ParseIntPipe)
-    limit: number,
+    @Query('completed') completed: string = 'false',
+    @Query('page') page: string = '1',
+    @Query('limit') limit: string = '10',
   ) {
+    const pageNumber = Number(page);
+    const limitNumber = Number(limit);
+
+    if (
+      !Number.isInteger(pageNumber) ||
+      pageNumber < 1 ||
+      !Number.isInteger(limitNumber) ||
+      limitNumber < 1
+    ) {
+      throw new BadRequestException(
+        'Page and limit must be positive integers',
+      );
+    }
+
     return this.ssaiService.getSessions(
       completed === 'true',
-      page,
-      limit,
+      pageNumber,
+      limitNumber,
     );
   }
+
+
 
   @Get('sessions/:id')
   @ApiOperation({ summary: 'Get SSAI session by ID' })

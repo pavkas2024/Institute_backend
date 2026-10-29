@@ -186,10 +186,10 @@ export class SsaiService {
       session.date = data.date;
     }
 
-      // Оновлюємо час засідання
-    if (data.time !== undefined) {
-      session.time = data.time;
-    }
+    // Оновлюємо час засідання
+  if (data.time !== undefined) {
+    session.time = data.time;
+  }
 
     if (data.orderInMonth !== undefined) {
       session.orderInMonth = data.orderInMonth;
