@@ -83,6 +83,8 @@ export class CreateStaffDto {
           patronymic: { type: 'string', example: 'Іванович' },
           degree: { type: 'string', example: 'кандидат наук', nullable: true },
           acadTitle: { type: 'string', example: 'доцент', nullable: true },
+          acadTitle2: { type: 'string', example: 'info', nullable: true },
+          info: { type: 'string', example: 'Associate Professor', nullable: true },
           position: { type: 'string', example: 'Науковий співробітник' },
           department: { type: 'string', example: 'Відділ біології', nullable: true },
         },
@@ -95,6 +97,8 @@ export class CreateStaffDto {
           patronymic: { type: 'string', example: 'Ivanovych', nullable: true },
           degree: { type: 'string', example: 'PhD', nullable: true },
           acadTitle: { type: 'string', example: 'Associate Professor', nullable: true },
+          acadTitle2: { type: 'string', example: 'info', nullable: true },
+          info: { type: 'string', example: 'Associate Professor', nullable: true },
           position: { type: 'string', example: 'Researcher' },
           department: { type: 'string', example: 'Biology Department', nullable: true },
         },
@@ -108,6 +112,8 @@ export class CreateStaffDto {
       patronymic: string;
       degree?: string;
       acadTitle?: string;
+      acadTitle2?: string;
+      info?:string;
       position: string;
       department?: string;
     };
@@ -117,6 +123,8 @@ export class CreateStaffDto {
       patronymic?: string;
       degree?: string;
       acadTitle?: string;
+      acadTitle2?: string;
+      info?:string;
       position: string;
       department?: string;
     };

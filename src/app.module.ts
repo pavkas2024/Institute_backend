@@ -24,6 +24,7 @@ import { StaffsModule } from './staffs/staffs.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { PageJournalsModule } from './pagejournals/pagejournals.module';
+import { SsaiModule } from './ssai/ssai.module';
 
 
 
@@ -55,6 +56,7 @@ import { PageJournalsModule } from './pagejournals/pagejournals.module';
     SeminarsModule,
     StaffsModule,
     PageJournalsModule,
+    SsaiModule,
   ],
   controllers: [AppController],
   providers: [AppService],
