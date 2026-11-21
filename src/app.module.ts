@@ -25,6 +25,7 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
 import { PageJournalsModule } from './pagejournals/pagejournals.module';
 import { SsaiModule } from './ssai/ssai.module';
+import { CkknoModule } from './ckkno/ckkno.module';
 
 
 
@@ -57,6 +58,7 @@ import { SsaiModule } from './ssai/ssai.module';
     StaffsModule,
     PageJournalsModule,
     SsaiModule,
+    CkknoModule,
   ],
   controllers: [AppController],
   providers: [AppService],
