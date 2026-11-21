@@ -1,4 +1,7 @@
+
 import { Test, TestingModule } from '@nestjs/testing';
+import { getModelToken } from '@nestjs/mongoose';
+
 import { SsaiController } from './ssai.controller';
 import { SsaiService } from './ssai.service';
 
@@ -8,7 +11,17 @@ describe('SsaiController', () => {
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [SsaiController],
-      providers: [SsaiService],
+      providers: [
+        SsaiService,
+        {
+          provide: getModelToken('SsaiInfo'),
+          useValue: {},
+        },
+        {
+          provide: getModelToken('SsaiSession'),
+          useValue: {},
+        },
+      ],
     }).compile();
 
     controller = module.get<SsaiController>(SsaiController);

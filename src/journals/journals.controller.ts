@@ -19,7 +19,8 @@ import {
     ApiOperation,
     ApiConsumes,
     ApiResponse,
-    ApiParam,
+    ApiParam, 
+    ApiBody,
 } from '@nestjs/swagger';
 import { FileInterceptor } from '@nestjs/platform-express';
 
@@ -104,6 +105,27 @@ export class JournalsController {
      }
  ///////////////////////////////////////////////
      @Patch(':id')
+    @ApiConsumes('multipart/form-data')
+    @ApiBody({
+    schema: {
+        type: 'object',
+        properties: {
+        link: {
+            type: 'string',
+            example: 'https://ssai.org.ua/',
+        },
+        translates: {
+            type: 'string',
+            description: 'JSON із перекладами (необов’язково)',
+        },
+        photo: {
+            type: 'string',
+            format: 'binary',
+            description: 'Нове фото (необов’язково)',
+        },
+        },
+    },
+    })
      @ApiResponse({
        status: HttpStatus.OK,
        description: 'Success',
