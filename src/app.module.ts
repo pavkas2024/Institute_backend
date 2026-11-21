@@ -20,12 +20,14 @@ import { ProcurementModule } from './procurements/procurements.module';
 import { PublicationsModule } from './publications/publications.module';
 import { SeminarsModule } from './seminars/seminars.module';
 import { StaffsModule } from './staffs/staffs.module';
-
-import { ServeStaticModule } from '@nestjs/serve-static';
-import { join } from 'path';
 import { PageJournalsModule } from './pagejournals/pagejournals.module';
 import { SsaiModule } from './ssai/ssai.module';
 import { CkknoModule } from './ckkno/ckkno.module';
+import { YoutubeModule } from './youtube/youtube.module';
+
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
+
 
 
 
@@ -59,6 +61,7 @@ import { CkknoModule } from './ckkno/ckkno.module';
     PageJournalsModule,
     SsaiModule,
     CkknoModule,
+    YoutubeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
