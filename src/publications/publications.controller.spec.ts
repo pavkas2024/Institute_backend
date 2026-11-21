@@ -1,18 +1,28 @@
-import { Test, TestingModule } from '@nestjs/testing';
-import { PublicationsController } from './publications.controller';
 
-describe('PublicationsController', () => {
-  let controller: PublicationsController;
+import { Test, TestingModule } from '@nestjs/testing';
+import { getModelToken } from '@nestjs/mongoose';
+
+import { PublicationsService } from './publications.service';
+import { Publication } from './schemas/publications.schema';
+
+describe('PublicationsService', () => {
+  let service: PublicationsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      controllers: [PublicationsController],
+      providers: [
+        PublicationsService,
+        {
+          provide: getModelToken(Publication.name),
+          useValue: {},
+        },
+      ],
     }).compile();
 
-    controller = module.get<PublicationsController>(PublicationsController);
+    service = module.get<PublicationsService>(PublicationsService);
   });
 
   it('should be defined', () => {
-    expect(controller).toBeDefined();
+    expect(service).toBeDefined();
   });
 });

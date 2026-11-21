@@ -1,54 +1,7 @@
-import {
-    IsNotEmpty,
-    IsOptional,
-    IsString,
-    IsObject,
-    IsArray,
-  } from 'class-validator';
 
+import { PartialType } from '@nestjs/swagger';
+import { CreatePublicationDto } from './create-publication.dto';
 
-  export class UpdatePublicationDto {
-    @IsOptional()
-    @IsString()
-    readonly photo?: string;
-
-    @IsOptional()
-    @IsString()
-    readonly doi?: string;
-
-    @IsNotEmpty()
-    @IsString()
-    readonly year: string;
-
-    @IsOptional()
-    @IsString()
-    readonly issn?: string;
-
-  
-    @IsNotEmpty()
-    @IsObject()
-    readonly translates: {
-      uk: {
-        title: string;
-        authors: string[];
-        journal?: string;
-        publisher?: string;
-        city?: string,
-        pages?: string,
-        description?: string;
-        other?: string;
-      };
-      en: {
-        title: string;
-        authors: string[];
-        journal?: string;
-        publisher?: string;
-        city?: string,
-        pages?: string,
-        description?: string;
-        other?: string;
-      };
-    };
-
-  }
-  
+export class UpdatePublicationDto extends PartialType(
+  CreatePublicationDto,
+) {}

@@ -30,6 +30,23 @@ async create(publication: CreatePublicationDto): Promise<Publication> {
 
     return res;
 }
+/////////////////////////////
+
+
+async getBySlug(slug: string): Promise<Publication> {
+    const publication = await this.publicationsModel.findOne({
+      slug: slug,
+    });
+  
+    if (!publication) {
+      throw new NotFoundException(
+        'Publication not found',
+      );
+    }
+  
+    return publication;
+  }
+  
 
 ////////////////////////////////////////  
 async getById(id: string): Promise<Publication> {
