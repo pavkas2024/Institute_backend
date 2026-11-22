@@ -5,43 +5,59 @@ import {
     BadGatewayException,
   } from '@nestjs/common';
   
-  type CachedViews = {
+  type VideoStats = {
     views: number;
+    likes: number | null;
+  };
+  
+  type CachedStats = {
+    stats: VideoStats;
     updatedAt: number;
   };
   
   @Injectable()
   export class YoutubeService {
+    // Кешування на 12 годин
     private readonly CACHE_DURATION = 12 * 60 * 60 * 1000;
   
-    private readonly viewsCache = new Map<string, CachedViews>();
+    private readonly statsCache =
+      new Map<string, CachedStats>();
   
-    private readonly pendingRequests = new Map<
-      string,
-      Promise<number>
-    >();
+    private readonly pendingRequests =
+      new Map<string, Promise<VideoStats>>();
   
+    // Старий метод залишається для сумісності
+    // з наявним контролером переглядів
     async getVideoViews(videoId: string): Promise<number> {
-      const now = Date.now();
-      const cached = this.viewsCache.get(videoId);
+      const stats = await this.getVideoStats(videoId);
+      return stats.views;
+    }
   
-      // Повертаємо кешоване значення протягом 12 годин
+    // Новий метод: перегляди + лайки
+    async getVideoStats(
+      videoId: string,
+    ): Promise<VideoStats> {
+      const now = Date.now();
+      const cached = this.statsCache.get(videoId);
+  
       if (
         cached &&
         now - cached.updatedAt < this.CACHE_DURATION
       ) {
-        return cached.views;
+        return cached.stats;
       }
   
-      // Не запускаємо кілька одночасних запитів
-      // для одного й того самого відео
+      // Уникаємо повторних одночасних запитів
       const pending = this.pendingRequests.get(videoId);
   
       if (pending) {
         return pending;
       }
   
-      const request = this.fetchVideoViews(videoId, cached);
+      const request = this.fetchVideoStats(
+        videoId,
+        cached,
+      );
   
       this.pendingRequests.set(videoId, request);
   
@@ -52,14 +68,14 @@ import {
       }
     }
   
-    private async fetchVideoViews(
+    private async fetchVideoStats(
       videoId: string,
-      cached?: CachedViews,
-    ): Promise<number> {
+      cached?: CachedStats,
+    ): Promise<VideoStats> {
       const apiKey = process.env.YOUTUBE_API_KEY;
   
       if (!apiKey) {
-        if (cached) return cached.views;
+        if (cached) return cached.stats;
   
         throw new InternalServerErrorException(
           'YOUTUBE_API_KEY is not configured',
@@ -87,39 +103,63 @@ import {
   
         const data = await response.json();
   
-        const views = data.items?.[0]?.statistics?.viewCount;
+        const statistics = data.items?.[0]?.statistics;
   
-        if (views === undefined) {
-          throw new Error('Video views are unavailable');
+        if (!statistics) {
+          throw new Error('Video statistics unavailable');
         }
   
-        const count = Number(views);
+        const views = Number(statistics.viewCount);
   
-        if (!Number.isSafeInteger(count) || count < 0) {
+        if (
+          statistics.viewCount === undefined ||
+          !Number.isSafeInteger(views) ||
+          views < 0
+        ) {
           throw new Error('Invalid YouTube view count');
         }
   
-        // Зберігаємо отриману статистику в кеші
-        this.viewsCache.set(videoId, {
-          views: count,
+        let likes: number | null = null;
+  
+        if (statistics.likeCount !== undefined) {
+          const likeCount = Number(statistics.likeCount);
+  
+          if (
+            Number.isSafeInteger(likeCount) &&
+            likeCount >= 0
+          ) {
+            likes = likeCount;
+          }
+        }
+  
+        const stats: VideoStats = {
+          views,
+          likes,
+        };
+  
+        // Зберігаємо статистику на 12 годин
+        this.statsCache.set(videoId, {
+          stats,
           updatedAt: Date.now(),
         });
   
-        return count;
+        return stats;
       } catch (error) {
         console.error(
-          'YouTube views request failed:',
-          error instanceof Error ? error.message : error,
+          'YouTube statistics request failed:',
+          error instanceof Error
+            ? error.message
+            : error,
         );
   
         // Якщо YouTube тимчасово недоступний,
-        // повертаємо попереднє значення
+        // повертаємо останню збережену статистику
         if (cached) {
-          return cached.views;
+          return cached.stats;
         }
   
         throw new BadGatewayException(
-          'Unable to retrieve YouTube video views',
+          'Unable to retrieve YouTube statistics',
         );
       }
     }
