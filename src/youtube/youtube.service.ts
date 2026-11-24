@@ -18,7 +18,7 @@ import {
   @Injectable()
   export class YoutubeService {
     // Кешування на 12 годин
-    private readonly CACHE_DURATION = 12 * 60 * 60 * 1000;
+    private readonly CACHE_DURATION = 15 * 60 * 1000;
   
     private readonly statsCache =
       new Map<string, CachedStats>();
